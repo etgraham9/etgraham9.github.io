@@ -24,3 +24,7 @@ main {
 h2 {
     text-align: center;
 }
+
+.italics {
+    font-style: italic;
+}
