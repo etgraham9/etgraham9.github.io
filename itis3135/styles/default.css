@@ -29,7 +29,17 @@ h2 {
     font-style: italic;
 }
 
+.center {
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
 .pic {
-    align-items: center;
-    max-width: 500px;
+    max-width: 200;
+}
+
+figure figcaption {
+    text-align: center;
 }
