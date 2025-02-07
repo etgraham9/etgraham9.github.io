@@ -1,0 +1,13 @@
+.inline {
+    display: inline-block;
+}
+
+nav {
+    justify-content: right;
+    margin-right: 0%;
+    padding-right: 0%;
+}
+
+h1 {
+    text-align: center;
+}
