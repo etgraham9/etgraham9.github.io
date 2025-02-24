@@ -3,6 +3,8 @@ body {
     text-align: center;
     color:black;
     font-family: monospace;
+    margin: 0 auto;
+    width: 900px;
 }
 
 a {
@@ -29,12 +31,6 @@ h2 {
     font-style: italic;
 }
 
-.center {
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-}
 
 .pic {
     max-width: 200px;
