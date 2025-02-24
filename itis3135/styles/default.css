@@ -1,6 +1,6 @@
 body {
     background-color: cadetblue;
-    text-align: center;
+    text-align: left;
     color:black;
     font-family: monospace;
     margin: 0 auto;
@@ -37,5 +37,26 @@ h2 {
 }
 
 figure figcaption {
+    text-align: center;
+}
+
+figure {
+    text-align: center;
+    margin: auto;
+}
+
+ul {
+    padding-left: 10px
+}
+
+.sublist {
+    padding-left: 30px;
+}
+
+header {
+    text-align: center;
+}
+
+footer {
     text-align: center;
 }
