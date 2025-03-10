@@ -1,3 +1,9 @@
+main {
+    max-width: 800px;
+    width: 80%;
+    margin: 0 auto;
+}
+
 body {
     background-color: cadetblue;
     text-align: left;
@@ -61,3 +67,19 @@ header {
 footer {
     text-align: center;
 }
+
+/* Mobile Devices*/
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    main {
+      width: 200px;
+      height: 200px;
+    }
+}
+
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    main {
+      width: 400px;
+      height: 400px;
+    }
+  }
