@@ -18,6 +18,10 @@ h2, header, footer, figure figcaption, figure {
     text-align: center;
 }
 
+.center {
+    margin: 0 auto;
+}
+
 a {
     color: aliceblue;
     text-decoration: none;
@@ -35,6 +39,7 @@ a:hover {
 .pic {
     max-width: 200px;
     margin: 0 auto;
+    text-align: center;
 }
 
 ul {
