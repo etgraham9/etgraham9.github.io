@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact | Thomas Graham Woodworking</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div data-include="components/header.html"></div>
+    <script src="js/include.js"></script>
+  <main>
+    <h2>Contact Thomas</h2>
+    <form id="contactForm">
+      <label for="name">Name:</label><input type="text" id="name" name="name" required>
+      <label for="email">Email:</label><input type="email" id="email" name="email" required>
+      <label for="message">Message:</label><textarea id="message" name="message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <div id="formResponse"></div>
+  </main>
+  <div data-include="components/footer.html"></div>
+    <script src="js/include.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>
