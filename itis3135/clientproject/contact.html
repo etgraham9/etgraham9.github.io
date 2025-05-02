@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Thomas Graham for custom woodworking projects and inquiries." />
   <title>Contact | Thomas Graham Woodworking</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <div data-include="components/header.html"></div>
-    <script src="js/include.js"></script>
+  <div data-include="components/header.html"></div>
+
   <main>
     <h2>Contact Thomas</h2>
-    <form id="contactForm">
-      <label for="name">Name:</label><input type="text" id="name" name="name" required>
-      <label for="email">Email:</label><input type="email" id="email" name="email" required>
-      <label for="message">Message:</label><textarea id="message" name="message" required></textarea>
+    <form id="contactForm" action="#" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+
       <button type="submit">Send</button>
     </form>
-    <div id="formResponse"></div>
+
+    <div id="formResponse" aria-live="polite"></div>
+
+    <section id="previewSection" style="margin-top: 2rem; display: none;">
+        <h3>Message Preview</h3>
+        <div class="message-card">
+          <p><strong>Name:</strong> <span id="previewName"></span></p>
+          <p><strong>Email:</strong> <span id="previewEmail"></span></p>
+          <p><strong>Message:</strong></p>
+          <p id="previewMessage"></p>
+        </div>
+      </section>
+      
   </main>
+
   <div data-include="components/footer.html"></div>
-    <script src="js/include.js"></script>
+
+  <script src="js/include.js"></script>
   <script src="js/contact.js"></script>
 </body>
 </html>
+
