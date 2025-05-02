@@ -11,52 +11,150 @@
     <div data-include="components/header.html"></div>
     <script src="scripts/include.js"></script>
     <main>
-        <h2>
-            Project Overview:
-        </h2>
+        <h1>Woodworking Website Project Overview</h1>
+
+  <section>
+    <h2>Primary Users</h2>
+    <p>Individuals interested in woodworking, potential customers, DIY enthusiasts, and people looking for custom woodwork.</p>
+  </section>
+
+  <section>
+    <h2>Secondary Users</h2>
+    <p>Visitors curious about woodworking projects, people who want to learn more about woodworking techniques, or those who are exploring woodworking as a hobby.</p>
+  </section>
+
+  <section>
+    <h2>Overview of Website Content</h2>
+    <ul>
+      <li><strong>Home Page:</strong> Introduction to the website, brief info about your father’s woodworking background, and a preview of the latest projects.</li>
+      <li><strong>Gallery Page:</strong> A visual gallery of the woodworking projects, categorized (e.g., furniture, cabinetry, outdoor, etc.).</li>
+      <li><strong>About Page:</strong> Information about your father's journey in woodworking, his philosophy, and his approach to craftsmanship.</li>
+      <li><strong>Contact Page:</strong> A form for users to reach out to inquire about commissions, ask questions, or request quotes.</li>
+      <li><strong>Blog Page (Optional):</strong> If your father has any woodworking tips, blog posts, or tutorials, this page will serve as a space for informative content.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Client Information</h2>
+    <ul>
+      <li><strong>Name of the Client:</strong> Thomas Graham</li>
+      <li><strong>Organization/Institute/Business:</strong> Personal Woodworking Project</li>
+      <li><strong>Client’s Email Address:</strong> Private</li>
+      <li><strong>Client’s Phone Number:</strong> Private</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Wireframe</h2>
+    <figure class="center pic">
+        <img src="images/Wireframe.drawio.png" alt="Wireframe" style="width:100%">
+        <figcaption><br><em>Here is a basic idea for the format of my site.</em></figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Site Map</h2>
+    <figure class="center pic">
+        <img src="images/Sitemap.drawio.png" alt="Sitemap" style="width:100%">
+        <figcaption><br><em>Here is how my site will be laid out and connected.</em></figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Page Design Details</h2>
+
+    <h3>1. Home Page (index.html)</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Introduce the website and your father’s woodworking.</li>
+      <li><strong>Audience:</strong> General visitors, potential customers, hobbyists.</li>
+      <li><strong>Content:</strong>
         <ul>
-            <li>
-                This application will be used to showcase my clients woodworking skills and projects. As well as some resources that my client wants to share about woodworking. It could also allow other users to submit feedback via forms.
-            </li>
-            <li>
-                Woodworking enthusiasts or people interested in learning about woodworking as well as those interested in my clients' builds.
-            </li>
-            <li>
-                There will be pictures of the clients projects as well as info about future projects. Other users will be able to submit a form to ask questions.
-            </li>
+          <li>Hero section with a short description of your father's woodworking passion.</li>
+          <li>A carousel or featured section with images of completed projects.</li>
         </ul>
-        <h2>
-            Client Information:
-        </h2>
+      </li>
+      <li><strong>Data Entry:</strong> None</li>
+      <li><strong>Validation:</strong> None</li>
+      <li><strong>Actions:</strong> Visitors can navigate to other pages through the navigation menu.</li>
+      <li><strong>Special Notes:</strong> Ensure this page includes a welcoming and visually appealing introduction to hook visitors.</li>
+    </ul>
+
+    <h3>2. Gallery Page (gallery.html)</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Display a collection of your father’s woodworking projects.</li>
+      <li><strong>Audience:</strong> Potential customers, enthusiasts, and general visitors.</li>
+      <li><strong>Content:</strong>
         <ul>
-            <li>
-                Name: Thomas Graham
-            </li>
-            <li>
-                Organization: N/A this is a personal project showcase.
-            </li>
-            <li>
-                Email: [private]
-            </li>
-            <li>
-                Phone Number: [private]
-            </li>
+          <li>A grid or masonry layout of images from different project categories.</li>
+          <li>A description under each image.</li>
         </ul>
-        <h2>
-            Wireframe:
-        </h2>
-        <h2>
-            Site Map:
-        </h2>
-        <h2>
-            Page Design:
-        </h2>
-        <h2>
-            Dynamic Functionality:
-        </h2>
-        <p>
-            This webpage will include an image carousel that will allow users to click on the pictures in order to visit particular projects. There will also be a questions page where there will be a form that allows users to submit feedback.
-        </p>
+      </li>
+      <li><strong>Data Entry:</strong> None</li>
+      <li><strong>Validation:</strong> None</li>
+      <li><strong>Actions:</strong> Clicking an image could open a lightbox with more details about that project.</li>
+      <li><strong>Special Notes:</strong> Use jQuery for the lightbox functionality.</li>
+    </ul>
+
+    <h3>3. About Page (about.html)</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Give a personal touch by sharing your father's journey and craftsmanship philosophy.</li>
+      <li><strong>Audience:</strong> General visitors who want to know more about the artist behind the work.</li>
+      <li><strong>Content:</strong> Text, personal story, photos of the workshop, and maybe even a video.</li>
+      <li><strong>Data Entry:</strong> None</li>
+      <li><strong>Validation:</strong> None</li>
+      <li><strong>Actions:</strong> Visitors can navigate to other pages.</li>
+      <li><strong>Special Notes:</strong> This page should have an authentic, personal feel to connect with visitors.</li>
+    </ul>
+
+    <h3>4. Contact Page (contact.html)</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Allow potential customers or interested visitors to contact your father.</li>
+      <li><strong>Audience:</strong> Anyone interested in commissioning projects or asking questions.</li>
+      <li><strong>Content:</strong>
+        <ul>
+          <li>A simple contact form (name, email, message).</li>
+          <li>Contact information (phone, email).</li>
+        </ul>
+      </li>
+      <li><strong>Data Entry:</strong> Name, email, and message fields.</li>
+      <li><strong>Validation:</strong> Ensure that the email format is correct and the message field isn’t empty.</li>
+      <li><strong>Actions:</strong> Form submission via JavaScript, with a confirmation or thank-you message.</li>
+      <li><strong>Special Notes:</strong> Use simple JavaScript to validate the form.</li>
+    </ul>
+
+    <h3>5. Blog Page (blog.html) - Optional</h3>
+    <ul>
+      <li><strong>Purpose:</strong> Share woodworking tips, tutorials, or project updates.</li>
+      <li><strong>Audience:</strong> People interested in learning or getting inspired.</li>
+      <li><strong>Content:</strong> Articles or posts about woodworking techniques or new projects.</li>
+      <li><strong>Data Entry:</strong> None for now.</li>
+      <li><strong>Validation:</strong> None.</li>
+      <li><strong>Actions:</strong> Visitors can navigate to posts or articles.</li>
+      <li><strong>Special Notes:</strong> Consider adding a search bar to help visitors find specific posts.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Dynamic Functionality</h2>
+    <ul>
+      <li><strong>Gallery (Interactive Images):</strong>
+        <ul>
+          <li>Users can click on project images to view them in a lightbox.</li>
+          <li>Implement with JavaScript/jQuery.</li>
+        </ul>
+      </li>
+      <li><strong>Contact Form with Validation:</strong>
+        <ul>
+          <li>Use JavaScript to validate the form fields before submission.</li>
+        </ul>
+      </li>
+      <li><strong>AJAX for Form Submission:</strong>
+        <ul>
+          <li>Submit the contact form without reloading the page, providing a smooth user experience.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
     </main>
     <div data-include="components/footer.html"></div>
     <script src="scripts/include.js"></script>
