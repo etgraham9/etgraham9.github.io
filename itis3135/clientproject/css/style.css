@@ -1,228 +1,227 @@
 /* Global Reset and Base */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Georgia', serif;
-    background-color: #f3eee3;
-    color: #3e2f1c;
-    line-height: 1.6;
-  }
-  
-  a {
-    color: #5a3e1b;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  /* Header and Navigation */
-  header {
-    background-color: #7b5e3b;
-    color: #fffef9;
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 5px solid #4a321c;
-  }
-  
-  header h1 {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-  }
-  
-  nav {
-    margin-top: 0.5rem;
-  }
-  
-  nav a {
-    margin: 0 1rem;
-    color: #fffef9;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  nav a:hover {
-    color: #d9b382;
-  }
-  
-  /* Hero Section */
-  .hero {
-    background: url('../images/wood-background.jpg') no-repeat center center/cover;
-    color: #fffef9;
-    padding: 4rem 1rem;
-    text-align: center;
-    background-attachment: fixed;
-  }
-  
-  .hero h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: auto;
-  }
-  
-  /* Main Content */
-  main {
-    padding: 2rem;
-  }
-  
-  h2, h3 {
-    color: #4a321c;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    margin-bottom: 1rem;
-  }
-  
-  /* Project Grid / Gallery */
-  .project-grid,
-  .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  
-  .project-grid img,
-  .gallery img {
-    max-width: 300px;
-    width: 100%;
-    border: 5px solid #c4a484;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s;
-  }
-  
-  .project-grid img:hover,
-  .gallery img:hover {
-    transform: scale(1.05);
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .carousel {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
-  
-  .carousel-image {
-    width: 100%;
-    display: none;
-    transition: opacity 1s ease-in-out;
-    object-fit: cover;
-  }
-  
-  .carousel-image.active {
-    display: block;
-  }  
-  
-  /* About Page */
-  img[alt*="workshop"] {
-    max-width: 100%;
-    border: 5px solid #bfa77f;
-    margin-top: 1rem;
-    box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
-  }
-  
-  /* Contact Form */
-  form {
-    background-color: #fffaf2;
-    padding: 2rem;
-    max-width: 500px;
-    margin: auto;
-    border-radius: 8px;
-    border: 2px solid #c4a484;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  
-  form label {
-    font-weight: bold;
-    display: block;
-    margin: 1rem 0 0.25rem;
-  }
-  
-  input, textarea {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #bfa77f;
-    border-radius: 4px;
-    font-family: 'Georgia', serif;
-  }
-  
-  textarea {
-    height: 150px;
-  }
-  
-  button {
-    background-color: #7b5e3b;
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 4px;
-    margin-top: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #5e452e;
-  }
+body {
+  font-family: 'Georgia', serif;
+  background-color: #f0e8d9; /* Slightly lighter for contrast */
+  color: #2e210f; /* Deeper brown for better readability */
+  line-height: 1.6;
+}
 
-  .message-card {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin-top: 1rem;
-    font-family: sans-serif;
-  }
-  
-  .message-card p {
-    margin: 0.5rem 0;
-  }
-  
-  .message-card strong {
-    color: #444;
-  }
-  
-  
-  /* Footer */
-  footer {
-    background-color: #4a321c;
-    color: #fffef9;
-    padding: 1rem;
-    text-align: center;
-    margin-top: 2rem;
-    border-top: 5px solid #7b5e3b;
-  }
-  
-  /* Lightbox Overlay (used in JS) */
-  #lightbox {
-    z-index: 1000;
-  }
-  
-  /* Blog Articles */
-  article {
-    background: #fffdf6;
-    border-left: 5px solid #a67c52;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  }
-  
+a {
+  color: #4a2e1a; /* Darker for improved contrast */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header and Navigation */
+header {
+  background-color: #5e3f24; /* Richer, darker wood tone */
+  color: #fffdf6;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 5px solid #3b2615;
+}
+
+header h1 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  margin: 0 1rem;
+  color: #fffdf6;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #e0b57c; /* Brighter accent for hover */
+}
+
+/* Hero Section */
+.hero {
+  background: url('../images/wood-background.jpg') no-repeat center center/cover;
+  color: #fffdf6;
+  padding: 4rem 1rem;
+  text-align: center;
+  background-attachment: fixed;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* Main Content */
+main {
+  padding: 2rem;
+}
+
+h2, h3 {
+  color: #3b2615;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+/* Project Grid / Gallery */
+.project-grid,
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.project-grid img,
+.gallery img {
+  max-width: 300px;
+  width: 100%;
+  border: 5px solid #a67c52;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s;
+}
+
+.project-grid img:hover,
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* Carousel */
+.carousel {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.carousel-image {
+  width: 100%;
+  display: none;
+  transition: opacity 1s ease-in-out;
+  object-fit: cover;
+}
+
+.carousel-image.active {
+  display: block;
+}  
+
+/* About Page */
+img[alt*="workshop"] {
+  max-width: 100%;
+  border: 5px solid #a67c52;
+  margin-top: 1rem;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Contact Form */
+form {
+  background-color: #fffaf0;
+  padding: 2rem;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 8px;
+  border: 2px solid #a67c52;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form label {
+  font-weight: bold;
+  display: block;
+  margin: 1rem 0 0.25rem;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #a67c52;
+  border-radius: 4px;
+  font-family: 'Georgia', serif;
+}
+
+textarea {
+  height: 150px;
+}
+
+button {
+  background-color: #5e3f24;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  margin-top: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3f2b18;
+}
+
+.message-card {
+  background-color: #fdfaf3;
+  border: 1px solid #a67c52;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin-top: 1rem;
+  font-family: sans-serif;
+}
+
+.message-card p {
+  margin: 0.5rem 0;
+}
+
+.message-card strong {
+  color: #2f2f2f;
+}
+
+/* Footer */
+footer {
+  background-color: #3b2615;
+  color: #fffdf6;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 2rem;
+  border-top: 5px solid #5e3f24;
+}
+
+/* Lightbox Overlay */
+#lightbox {
+  z-index: 1000;
+}
+
+/* Blog Articles */
+article {
+  background: #fff9ee;
+  border-left: 5px solid #8c6239;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
