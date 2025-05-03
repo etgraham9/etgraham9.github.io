@@ -196,6 +196,36 @@ display: none;
     opacity: 1;
 }
 
+.slideshow-wrapper {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+}
+
+.slideshow-image {
+    width: 100%;
+    height: auto;
+}
+
+.thumbnail-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail img {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.thumbnail img:hover {
+    border-color: #333;
+}
+
 /* Mobile Devices */
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
     main {
