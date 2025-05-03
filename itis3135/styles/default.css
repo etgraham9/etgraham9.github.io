@@ -50,6 +50,39 @@ ul {
     padding-left: 30px;
 }
 
+.border-black>*,
+.border-blackk>td {
+    border: 1px solid;
+    border-color: rgb(0, 0, 0);
+    border-color: rgba(0, 0, 0, 0.631);
+}
+
+table {
+    margin: auto;
+    padding-bottom: 1rem;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead tr {
+    background-color: #333;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #e0e0e0;
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+
 /* Mobile Devices */
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
     main {
