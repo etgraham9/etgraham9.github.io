@@ -20,14 +20,14 @@ function checkImage() {
 function loadImage() {
     var image = document.getElementById('introImage').files[0];
     var imageUrl = URL.createObjectURL(image);
-    var text = "<img style=\"border-radius:10px; width:300px; margin:10px auto;\" src=\"" + imageUrl + "\" >"
+    var text = "<img style=\"border-radius:10px; width:300px; margin:10px auto;\" src=\"" + imageUrl + "\" >";
     document.getElementById('loadImage').innerHTML = text;
 }
 
 function turnDark() {
     var body = document.getElementById('bodyy');
     var resArea = document.getElementsByClassName('resArea');
-    var iResArea = document.querySelectorAll('[id^="resArea"]')
+    var iResArea = document.querySelectorAll('[id^="resArea"]');
     body.classList.remove('bodyFormat');
     body.classList.add('darkMode');
 
