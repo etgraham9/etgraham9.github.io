@@ -1,4 +1,4 @@
-
+let slideIndex = 1;
 
 function showSlides(n) {
     let i;
@@ -18,7 +18,7 @@ function showSlides(n) {
     captionText.innerHTML = dots[slideIndex-1].alt;
 } 
 
-let slideIndex = 1;
+
 showSlides(slideIndex);
 
 function plusSlides(n) {
