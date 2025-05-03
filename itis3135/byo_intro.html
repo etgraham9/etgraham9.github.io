@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethan Graham's Enigmatic Gorilla || ITIS 3135 || Homepage</title>
+    <link rel="stylesheet" href="styles/default.css">
+    <script src="https://lint.page/kit/4d0fe3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div data-include="components/header.html"></div>
+    <script src="scripts/include.js"></script>
+    <main>
+        <form id="byo-form" class="byo-form" style="font-size: larger;">
+            <h2>BYO Intro</h2>
+
+            <h3>Time to BYO Intro page, please fill out the form below so we can create your own page!</h3>
+
+            <label>Name: <input id="byo-name"></label>
+
+            <label>Choose a Mascot: <input id="byo-mascot"></label>
+
+            <label>Image upload: <input type="file" id="introImage" name="file" required></label>
+
+            <button style="width: 200px; align-self: center; height: 25px;" type="button" class="byoLoadImg resArea" onclick="loadImage()">Click here to load image!</button>
+            <div id="loadImage"></div>
+            <label>Image Caption: <input id="byo-imagecap"></label>
+            <label>Personal Background: <input id="byo-personalBack"></label>
+
+            <label>Professional Background: <input id="byo-professionalBack"></label>
+
+            <label>Academic Background: <input id="byo-academicBack"></label>
+
+            <label>Background in Web Development: <input id="byo-webBack"></label>
+
+            <label>Primary Computer Platform: <input id="byo-comp"></label>
+
+            <label id="byo-courses">Courses currently taking: <button class="resArea" type="button" onclick="addClass()"
+                    id="add-class">Click Here to add Classes!</button></label>
+            <label class="classResponse" id="classResponse"></label>
+
+            <label>Funny fact: <input id="byo-fact"></label>
+
+            <label>Anything Else: <input id="byo-anything"></label>
+            <label>I understand that what is on this page is not password protected and I will not put anything here that I don’t want publicly available.  <input type="checkbox" required></label>
+            <div class="bottom-buttons">
+                <input  type="button" value="Submit" id="submitButton" onclick="checkImage()">
+                <input  type="reset" value="Reset" onclick="resetForm()">
+            </div>
+        </form>
+        <form id="displayForm" style="margin-top:20px;"></form>
+
+    </main>
+    <div data-include="components/footer.html"></div>
+    <script src="scripts/include.js"></script>
+    <script src="scripts/survey.js"></script>
+</body>
+</html>

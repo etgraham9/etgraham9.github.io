@@ -82,6 +82,46 @@ td, th {
     border: 1px solid #ddd;
 }
 
+.center-all {
+    text-align: center;
+}
+
+.byo-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: large;
+}
+
+
+.bottom-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.bottom-buttons>input {
+    font-size: medium;
+}
+
+.classResponse>input {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.byoLoadImg {
+    margin: auto;
+    max-width: 170px;
+}
+
+.byo-form>label>input {
+    background-color: rgb(248, 240, 227);
+    font-size: medium;
+}
 
 /* Mobile Devices */
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
