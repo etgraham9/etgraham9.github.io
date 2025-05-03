@@ -54,7 +54,7 @@ ul {
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
     main {
       width: 200px;
-      height: 200px;
+      height: 400px;
     }
 }
 
@@ -63,5 +63,13 @@ ul {
     main {
       width: 400px;
       height: 400px;
+    }
+}
+
+/* For Laptop View */
+@media screen and (min-device-width: 1080) and (max-device-width: 2400) {
+    main {
+      width: 800px;
+      height: 600px;
     }
 }
