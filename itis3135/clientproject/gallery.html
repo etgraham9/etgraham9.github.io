@@ -7,43 +7,60 @@
   <script src="https://lint.page/kit/4d0fe3.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div data-include="components/header.html"></div>
-    <script src="js/include.js"></script>
-    <div class="carousel">
-        <img class="carousel-image" src="images/rockingchair.JPEG" alt="Rocking Chair">
-        <img class="carousel-image" src="images/banjo.JPEG" alt="Banjo">
-        <img class="carousel-image" src="images/lathe.JPEG" alt="Lathe">
-        <img class="carousel-image" src="images/candlestick.JPEG" alt="Candlestick">
-        <img class="carousel-image" src="images/whirlygig.PNG" alt="Whirlygig">
-      </div>      
-    <main>
-        <h2>Gallery</h2>
-        <div class="gallery">
-          <div class="gallery-item">
-            <img src="images/rockingchair.JPEG" alt="Rocking chair">
-            <p>Rocking Chair</p>
-          </div>
-          <div class="gallery-item">
-            <img src="images/banjo.JPEG" alt="Banjo">
-            <p>Banjo</p>
-          </div>
-          <div class="gallery-item">
-            <img src="images/lathe.JPEG" alt="Lathe">
-            <p>Woodturning Lathe</p>
-          </div>
-          <div class="gallery-item">
-            <img src="images/candlestick.JPEG" alt="Candlestick">
-            <p>Candlestick</p>
-          </div>
-          <div class="gallery-item">
-            <img src="images/whirlygig.PNG" alt="Whirlygig">
-            <p>Whirlygig</p>
-          </div>
-        </div>
-      </main>      
+  <div data-include="components/header.html"></div>
+  <script src="js/include.js"></script>
+  <h2 class="center">Gallery</h2>
+
+  <!--Rotating images between the projects-->
+  <div class="carousel">
+    <img class="carousel-image" src="images/rockingchair.JPEG" alt="Rocking Chair">
+    <img class="carousel-image" src="images/banjo.JPEG" alt="Banjo">
+    <img class="carousel-image" src="images/lathe.JPEG" alt="Lathe">
+    <img class="carousel-image" src="images/candlestick.JPEG" alt="Candlestick">
+    <img class="carousel-image" src="images/whirlygig.PNG" alt="Whirlygig">
+  </div>      
+  
+  <!--Static Image Gallery-->
+  <main>
+    <h3 class="center">A Closer Look</h3>
+    <p class="center">Click on any of the images below to get a closer look as well as a short description.</p>
+    <div class="gallery">
+      <div class="gallery-item">
+        <img src="images/rockingchair.JPEG" alt="Rocking chair" data-description="The rocking chair's seat is made of wicker with a wooden frame.">
+        <p class="center">Rocking Chair</p>
+      </div>
+      <div class="gallery-item">
+        <img src="images/banjo.JPEG" alt="Banjo" data-description="This is a handmade banjo which works just like a real one. It has plastic wires and can be tuned!">
+        <p class="center">Banjo</p>
+      </div>
+      <div class="gallery-item">
+        <img src="images/lathe.JPEG" alt="Lathe" data-description="A woodturning lathe used for creating detailed wooden designs.">
+        <p class="center">Woodturning Lathe</p>
+      </div>
+      <div class="gallery-item">
+        <img src="images/candlestick.JPEG" alt="Candlestick" data-description="Hand carved wooden candlesticks in a complex helix pattern.">
+        <p class="center">Candlestick</p>
+      </div>
+      <div class="gallery-item">
+        <img src="images/whirlygig.PNG" alt="Whirlygig" data-description="A whimsical wooden whirlygig with moving parts.">
+        <p class="center">Whirlygig</p>
+      </div>
+    </div>
+  </main>
+
+  <!--Lightbox-->
+  <div id="lightbox-modal" class="lightbox-modal">
+    <div class="lightbox-content">
+      <span id="close-modal" class="close">&times;</span>
+      <img id="lightbox-image" src="" alt="">
+      <p id="lightbox-description"></p>
+    </div>
+  </div>
+
+  <!--Scripts and footer-->
   <div data-include="components/footer.html"></div>
-    <script src="js/include.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="js/include.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="js/lightbox.js"></script>
   <script src="js/carousel.js"></script>
 </body>

@@ -7,13 +7,13 @@
 
 body {
   font-family: 'Georgia', serif;
-  background-color: #f0e8d9; /* Slightly lighter for contrast */
-  color: #2e210f; /* Deeper brown for better readability */
+  background-color: #f0e8d9;
+  color: #2e210f;
   line-height: 1.6;
 }
 
 a {
-  color: #4a2e1a; /* Darker for improved contrast */
+  color: #4a2e1a;
   text-decoration: none;
 }
 
@@ -21,9 +21,13 @@ a:hover {
   text-decoration: underline;
 }
 
+.center {
+  text-align: center;
+}
+
 /* Header and Navigation */
 header {
-  background-color: #5e3f24; /* Richer, darker wood tone */
+  background-color: #5e3f24;
   color: #fffdf6;
   padding: 1rem;
   text-align: center;
@@ -49,7 +53,7 @@ nav a {
 }
 
 nav a:hover {
-  color: #e0b57c; /* Brighter accent for hover */
+  color: #e0b57c;
 }
 
 /* Hero Section */
@@ -215,6 +219,44 @@ footer {
 /* Lightbox Overlay */
 #lightbox {
   z-index: 1000;
+}
+
+.lightbox-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.lightbox-content {
+  position: relative;
+  margin: auto;
+  top: 10%;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: white;
+}
+
+.lightbox-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.lightbox-content .close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /* Blog Articles */
