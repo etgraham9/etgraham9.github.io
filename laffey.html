@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Journey Map Loop</title>
+  <title>Single Loop Journey Map</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -46,8 +46,8 @@
 
   <div id="sidebar">
     <h2>My Travel Journey</h2>
-    <p>This is where you can describe your journey, add dates, descriptions, images, etc.</p>
-    <button onclick="startJourney()">Start Journey Loop</button>
+    <p>This journey shows a one-time animated route across a few cities. When completed, the map resets.</p>
+    <button onclick="startJourney()">Start Journey</button>
   </div>
 
   <div id="map-container">
@@ -58,50 +58,52 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script>
-    const map = L.map('map').setView([20, 0], 2);
+    let map;
+    let movingMarker;
+    let pathSegments = [];
+    let currentSegment = 0;
+    let isAnimating = false;
 
-    // Tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Journey points
     const journeyPoints = [
       [40.7128, -74.0060],  // New York
       [51.5074, -0.1278],   // London
       [48.8566, 2.3522],    // Paris
       [35.6895, 139.6917],  // Tokyo
-      [40.7128, -74.0060]   // Loop back to New York
+      [40.7128, -74.0060]   // Return to New York
     ];
 
-    // Markers
-    journeyPoints.forEach(([lat, lng]) => {
-      L.circleMarker([lat, lng], {
-        radius: 6,
-        color: 'blue',
-        fillColor: '#00f',
-        fillOpacity: 0.7
+    function initMap() {
+      map = L.map('map').setView([20, 0], 2);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
       }).addTo(map);
-    });
 
-    // Moving Icon
-    const movingIcon = L.icon({
-      iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-      iconSize: [32, 32],
-      iconAnchor: [16, 16]
-    });
+      // Static point markers
+      journeyPoints.forEach(([lat, lng]) => {
+        L.circleMarker([lat, lng], {
+          radius: 6,
+          color: 'blue',
+          fillColor: '#00f',
+          fillOpacity: 0.7
+        }).addTo(map);
+      });
+    }
 
-    const movingMarker = L.marker(journeyPoints[0], { icon: movingIcon }).addTo(map);
-
-    let currentSegment = 0;
-    let totalSegments = journeyPoints.length - 1;
-    let animationInterval;
+    function resetMap() {
+      map.remove();             // Remove existing map
+      pathSegments = [];        // Clear drawn lines
+      currentSegment = 0;       // Reset counter
+      isAnimating = false;      // Ready for next start
+      initMap();                // Reinitialize the map
+    }
 
     function animateSegment(start, end, steps, callback) {
       let step = 0;
       const latStep = (end[0] - start[0]) / steps;
       const lngStep = (end[1] - start[1]) / steps;
       const segmentLine = L.polyline([start], { color: '#0000ff', weight: 3 }).addTo(map);
+      pathSegments.push(segmentLine);
 
       const interval = setInterval(() => {
         step++;
@@ -120,20 +122,42 @@
     }
 
     function startJourney() {
-      if (animationInterval) clearInterval(animationInterval);
+      if (isAnimating) return;
+      isAnimating = true;
       currentSegment = 0;
-      loopJourney();
+
+      if (!map) initMap();
+
+      // Create or reset moving marker
+      if (movingMarker) map.removeLayer(movingMarker);
+      const icon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      movingMarker = L.marker(journeyPoints[0], { icon }).addTo(map);
+
+      animateNextSegment();
     }
 
-    function loopJourney() {
+    function animateNextSegment() {
+      if (currentSegment >= journeyPoints.length - 1) {
+        // All segments done – reset after delay
+        setTimeout(resetMap, 1000);
+        return;
+      }
+
       const start = journeyPoints[currentSegment];
-      const end = journeyPoints[(currentSegment + 1) % journeyPoints.length];
+      const end = journeyPoints[currentSegment + 1];
 
       animateSegment(start, end, 100, () => {
-        currentSegment = (currentSegment + 1) % journeyPoints.length;
-        setTimeout(loopJourney, 500); // short delay before next segment
+        currentSegment++;
+        setTimeout(animateNextSegment, 300); // Pause before next segment
       });
     }
+
+    // Initialize map on load
+    window.onload = initMap;
   </script>
 </body>
 </html>
