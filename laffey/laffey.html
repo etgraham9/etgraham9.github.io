@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Laffey Map</title>
+  <title>Journey with Waypoints</title>
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -45,8 +45,8 @@
 <body>
 
   <div id="sidebar">
-    <h2>Laffey Travel</h2>
-    <p>Check out the Laffeys Journey</p>
+    <h2>Laffey</h2>
+    <p>fill here</p>
     <button onclick="startJourney()">Start Journey</button>
   </div>
 
@@ -64,12 +64,16 @@
     let currentSegment = 0;
     let isAnimating = false;
 
+    // Route with visible and invisible points
     const journeyPoints = [
-      [40.7128, -74.0060],  // New York
-      [51.5074, -0.1278],   // London
-      [48.8566, 2.3522],    // Paris
-      [35.6895, 139.6917],  // Tokyo
-      [40.7128, -74.0060]   // Return to New York
+      { coords: [40.7128, -74.0060], visible: true },   // New York
+      { coords: [45.0, -30.0], visible: false },        // Invisible waypoint (over Atlantic)
+      { coords: [51.5074, -0.1278], visible: true },    // London
+      { coords: [50.0, 1.0], visible: false },          // Invisible waypoint
+      { coords: [48.8566, 2.3522], visible: true },     // Paris
+      { coords: [60.0, 60.0], visible: false },         // Invisible detour
+      { coords: [35.6895, 139.6917], visible: true },   // Tokyo
+      { coords: [40.7128, -74.0060], visible: true }    // Return to New York
     ];
 
     function initMap() {
@@ -79,23 +83,25 @@
         attribution: '© OpenStreetMap contributors'
       }).addTo(map);
 
-      // Static point markers
-      journeyPoints.forEach(([lat, lng]) => {
-        L.circleMarker([lat, lng], {
-          radius: 6,
-          color: 'blue',
-          fillColor: '#00f',
-          fillOpacity: 0.7
-        }).addTo(map);
+      // Only add markers for visible points
+      journeyPoints.forEach(point => {
+        if (point.visible) {
+          L.circleMarker(point.coords, {
+            radius: 6,
+            color: 'blue',
+            fillColor: '#00f',
+            fillOpacity: 0.7
+          }).addTo(map);
+        }
       });
     }
 
     function resetMap() {
-      map.remove();             // Remove existing map
-      pathSegments = [];        // Clear drawn lines
-      currentSegment = 0;       // Reset counter
-      isAnimating = false;      // Ready for next start
-      initMap();                // Reinitialize the map
+      map.remove();             
+      pathSegments = [];        
+      currentSegment = 0;       
+      isAnimating = false;      
+      initMap();                
     }
 
     function animateSegment(start, end, steps, callback) {
@@ -128,35 +134,32 @@
 
       if (!map) initMap();
 
-      // Create or reset moving marker
       if (movingMarker) map.removeLayer(movingMarker);
       const icon = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
         iconSize: [32, 32],
         iconAnchor: [16, 16]
       });
-      movingMarker = L.marker(journeyPoints[0], { icon }).addTo(map);
+      movingMarker = L.marker(journeyPoints[0].coords, { icon }).addTo(map);
 
       animateNextSegment();
     }
 
     function animateNextSegment() {
       if (currentSegment >= journeyPoints.length - 1) {
-        // All segments done – reset after delay
         setTimeout(resetMap, 1000);
         return;
       }
 
-      const start = journeyPoints[currentSegment];
-      const end = journeyPoints[currentSegment + 1];
+      const start = journeyPoints[currentSegment].coords;
+      const end = journeyPoints[currentSegment + 1].coords;
 
       animateSegment(start, end, 100, () => {
         currentSegment++;
-        setTimeout(animateNextSegment, 300); // Pause before next segment
+        setTimeout(animateNextSegment, 300);
       });
     }
 
-    // Initialize map on load
     window.onload = initMap;
   </script>
 </body>
