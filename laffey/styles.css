@@ -37,3 +37,52 @@ body, html {
   font-size: 1.2rem;
   max-width: 600px;
 }
+
+/* Header styles */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: white;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-tabs {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-tabs a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.nav-tabs a:hover,
+.nav-tabs a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.section {
+  padding-top: 100px; /* to avoid content hiding under the header */
+}

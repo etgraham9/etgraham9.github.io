@@ -11,11 +11,20 @@
   />
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">USS Laffey</div>
+            <ul class="nav-tabs">
+            <li><a href="index.html" class="active">Journey</a></li>
+            <li><a href="laffey.html">Interactive Map</a></li>
+            </ul>
+        </nav>
+    </header>
   <div id="map"></div>
 
   <div class="section" data-lat="40.7128" data-lng="-74.0060" data-zoom="6">
-    <h1>New York, USA</h1>
-    <p>Text 1.</p>
+    <h1>Norfolk, VA, USA</h1>
+    <p>The Laffey was often stationed here for training exercises.</p>
   </div>
   <div class="section" data-lat="48.8566" data-lng="2.3522" data-zoom="6">
     <h1>Paris, France</h1>
@@ -33,4 +42,14 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
+
+<script>
+  const links = document.querySelectorAll(".nav-tabs a");
+  links.forEach(link => {
+    if (link.href === window.location.href) {
+      link.classList.add("active");
+    }
+  });
+</script>
+
 </html>
