@@ -1,53 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Ethan Graham's Webpage</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Ethan Graham - Developer & Woodworker</title>
 		<style>
-			body {
-				background-color:darkslategray;
-				color: black;
+			* {
 				margin: 0;
 				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+				color: #333;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				line-height: 1.6;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			header {
+				background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+				padding: 60px 20px;
 				text-align: center;
-				font-family: 'Gill Sans';
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				border-bottom: 2px solid #00a8e8;
 			}
 
-			a {
-				color: aliceblue;
+			header h1 {
+				font-size: 3em;
+				font-weight: 300;
+				letter-spacing: 2px;
+				color: #00a8e8;
+				margin-bottom: 10px;
+			}
+
+			header p {
+				color: #666;
+				font-size: 1.1em;
+			}
+
+			main {
+				flex: 1;
+				padding: 60px 20px;
+				max-width: 900px;
+				margin: 0 auto;
+				width: 100%;
+			}
+
+			.showcase {
+				background: #ffffff;
+				border: 2px solid #00a8e8;
+				border-radius: 8px;
+				padding: 30px;
+				margin-bottom: 30px;
+				transition: all 0.3s ease;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+			}
+
+			.showcase:hover {
+				box-shadow: 0 8px 20px rgba(0, 168, 232, 0.2);
+				transform: translateY(-5px);
+			}
+
+			.showcase h2 {
+				color: #00a8e8;
+				margin-bottom: 15px;
+				font-size: 1.5em;
+			}
+
+			.showcase p {
+				color: #555;
+				margin-bottom: 20px;
+			}
+
+			.showcase a {
+				display: inline-block;
+				background: linear-gradient(135deg, #00a8e8 0%, #0088cc 100%);
+				color: #ffffff;
+				padding: 12px 30px;
+				border-radius: 5px;
 				text-decoration: none;
+				font-weight: 600;
+				transition: all 0.3s ease;
 			}
 
-			a:hover {
-				color:antiquewhite;
-				text-decoration: underline;
+			.showcase a:hover {
+				transform: scale(1.05);
+				box-shadow: 0 4px 15px rgba(0, 168, 232, 0.4);
 			}
 
 			footer {
-				color:black;
+				background: #ffffff;
+				padding: 40px 20px;
+				text-align: center;
+				border-top: 2px solid #00a8e8;
 			}
 
-		</style>
+			footer nav {
+				margin-bottom: 20px;
+			}
 
-		<!--<script src="https://lint.page/kit/4d0fe3.js" crossorigin="anonymous"></script>-->
+			footer a {
+				color: #00a8e8;
+				text-decoration: none;
+				margin: 0 10px;
+				transition: color 0.3s ease;
+			}
+
+			footer a:hover {
+				color: #0088cc;
+				text-decoration: underline;
+			}
+
+			footer p {
+				color: #999;
+				font-size: 0.9em;
+			}
+
+			@media (max-width: 600px) {
+				header h1 {
+					font-size: 2em;
+				}
+
+				.showcase {
+					padding: 20px;
+				}
+
+				footer a {
+					display: block;
+					margin: 8px 0;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<header>
-			<h1>WELCOME</h1>
+			<h1>ETHAN GRAHAM</h1>
+			<p>Developer | Craftsman | Problem Solver</p>
 		</header>
 		<main>
-			<h2>Woodworking Showcase</h2>
-			<a href="clientproject/index.html">THOMAS GRAHAM WOODWORKING</a>
-			<h2>Laffey Journey Showcase</h2>
-			<a href="laffey/index.html">Laffey Project Test</a>
+			<div class="showcase">
+				<h2>Woodworking Showcase</h2>
+				<p>Explore custom woodworking projects and craftsmanship.</p>
+				<a href="clientproject/index.html">VIEW PORTFOLIO</a>
+			</div>
+
+			<div class="showcase">
+				<h2>Laffey Journey</h2>
+				<p>Experience the Laffey project showcase and journey.</p>
+				<a href="laffey/index.html">EXPLORE PROJECT</a>
+			</div>
 		</main>
+
 		<footer>
 			<nav>
-				<a href="https://github.com/etgraham9">GitHub.com</a> ||
-				<a href="itis3135/index.html">ITIS3135</a> ||
-				<a href="https://webpages.charlotte.edu/egraha24/">CLT web</a> ||
-				<a href="https://etgraham9.github.io/">GitHub.io</a> ||
+				<a href="https://github.com/etgraham9">GitHub</a> •
+				<a href="itis3135/index.html">ITIS3135</a> •
+				<a href="https://webpages.charlotte.edu/egraha24/">UNC Charlotte</a> •
 				<a href="https://www.linkedin.com/in/ethan-graham-b6b40b251/">LinkedIn</a>
 			</nav>
+			<p>&copy; 2024 Ethan Graham. All rights reserved.</p>
 		</footer>
 	</body>
 </html>
