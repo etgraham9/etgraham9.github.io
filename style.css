@@ -1091,3 +1091,33 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  background: var(--wood);
+  color: var(--navy);
+  border: none;
+  border-radius: 3px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s, background 0.3s;
+  pointer-events: none;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.scroll-top-btn:hover {
+  background: var(--wood-light);
+}
