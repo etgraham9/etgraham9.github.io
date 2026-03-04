@@ -3,698 +3,396 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethan Graham — Developer & Craftsman</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy: #0d1b2a;
-      --navy-mid: #1a2e42;
-      --navy-light: #243d57;
-      --wood: #c4862e;
-      --wood-light: #e8a84c;
-      --wood-pale: #f5deb8;
-      --cream: #faf7f2;
-      --white: #ffffff;
-      --text-muted: #7a8fa3;
-      --text-body: #d4dde6;
-    }
-
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background: var(--navy);
-      color: var(--text-body);
-      font-family: 'Instrument Sans', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.5;
-    }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: grid;
-      grid-template-rows: 1fr auto;
-      padding: 0 clamp(2rem, 8vw, 8rem);
-      overflow: hidden;
-    }
-
-    .hero-bg-lines {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-bg-lines::before {
-      content: '';
-      position: absolute;
-      top: -20%;
-      right: -10%;
-      width: 70vw;
-      height: 70vw;
-      border-radius: 50%;
-      border: 1px solid rgba(196, 134, 46, 0.08);
-      box-shadow:
-        0 0 0 60px rgba(196, 134, 46, 0.04),
-        0 0 0 130px rgba(196, 134, 46, 0.025),
-        0 0 0 220px rgba(196, 134, 46, 0.01);
-    }
-
-    .hero-bg-lines::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--wood) 30%, var(--wood) 70%, transparent);
-      opacity: 0.3;
-    }
-
-    .nav-bar {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid rgba(196, 134, 46, 0.15);
-    }
-
-    .nav-logo {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--wood);
-      font-weight: 400;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--wood-light);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem 0 6rem;
-      max-width: 860px;
-    }
-
-    .hero-eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--wood);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      animation: fadeUp 0.8s ease both;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--wood);
-    }
-
-    .hero-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      font-weight: 400;
-      line-height: 0.95;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-      animation: fadeUp 0.8s ease 0.15s both;
-    }
-
-    .hero-name em {
-      font-style: italic;
-      color: var(--wood-light);
-    }
-
-    .hero-tagline {
-      font-size: 1.15rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin-bottom: 3rem;
-      animation: fadeUp 0.8s ease 0.3s both;
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-      animation: fadeUp 0.8s ease 0.45s both;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--wood);
-      color: var(--navy);
-      padding: 0.9rem 2rem;
-      border-radius: 3px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background: var(--wood-light);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(196, 134, 46, 0.35);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: transparent;
-      color: var(--text-body);
-      padding: 0.9rem 2rem;
-      border: 1px solid rgba(212, 221, 230, 0.2);
-      border-radius: 3px;
-      text-decoration: none;
-      font-weight: 400;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      transition: all 0.3s ease;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--wood);
-      color: var(--wood-light);
-      transform: translateY(-2px);
-    }
-
-    .hero-scroll-hint {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      z-index: 5;
-      animation: fadeUp 1s ease 0.9s both;
-    }
-
-    .scroll-line {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .scroll-line span {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .scroll-line::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 50px;
-      background: linear-gradient(to bottom, var(--wood), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    /* ── ABOUT STRIP ── */
-    .about-strip {
-      background: var(--navy-mid);
-      border-top: 1px solid rgba(196, 134, 46, 0.15);
-      border-bottom: 1px solid rgba(196, 134, 46, 0.15);
-      padding: 4rem clamp(2rem, 8vw, 8rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 3rem;
-    }
-
-    .about-item {
-      position: relative;
-      padding-left: 1.5rem;
-    }
-
-    .about-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0.3em;
-      width: 2px;
-      height: 1.2em;
-      background: var(--wood);
-    }
-
-    .about-item-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--wood);
-      margin-bottom: 0.5rem;
-    }
-
-    .about-item-value {
-      font-size: 1rem;
-      color: var(--white);
-      font-weight: 300;
-    }
-
-    /* ── PROJECTS SECTION ── */
-    .projects-section {
-      padding: 8rem clamp(2rem, 8vw, 8rem);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      color: var(--white);
-      line-height: 1.1;
-    }
-
-    .section-count {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      color: var(--wood);
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5px;
-      background: rgba(196, 134, 46, 0.1);
-      border: 1px solid rgba(196, 134, 46, 0.1);
-    }
-
-    .project-card {
-      background: var(--navy);
-      padding: 3rem;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s ease;
-      text-decoration: none;
-      display: block;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(196, 134, 46, 0.06), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .project-card:hover {
-      background: var(--navy-mid);
-    }
-
-    .project-card:hover::before {
-      opacity: 1;
-    }
-
-    .project-number {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: var(--wood);
-      margin-bottom: 2rem;
-      opacity: 0.7;
-    }
-
-    .project-icon {
-      width: 52px;
-      height: 52px;
-      border: 1px solid rgba(196, 134, 46, 0.3);
-      border-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.75rem;
-      font-size: 1.5rem;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .project-card:hover .project-icon {
-      border-color: var(--wood);
-      transform: rotate(-3deg);
-    }
-
-    .project-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.75rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 0.75rem;
-      line-height: 1.2;
-    }
-
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 2.5rem;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--wood);
-      transition: gap 0.3s, color 0.3s;
-    }
-
-    .project-card:hover .project-link {
-      gap: 1rem;
-      color: var(--wood-light);
-    }
-
-    .project-link-arrow {
-      font-size: 1rem;
-      transition: transform 0.3s;
-    }
-
-    .project-card:hover .project-link-arrow {
-      transform: translateX(4px);
-    }
-
-    /* ── CONNECT SECTION ── */
-    .connect-section {
-      background: var(--navy-mid);
-      border-top: 1px solid rgba(196, 134, 46, 0.15);
-      padding: 7rem clamp(2rem, 8vw, 8rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: start;
-    }
-
-    .connect-text .section-title {
-      margin-bottom: 1.25rem;
-    }
-
-    .connect-text p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.8;
-      max-width: 380px;
-    }
-
-    .connect-links {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      background: rgba(196, 134, 46, 0.1);
-    }
-
-    .connect-link {
-      background: var(--navy);
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-decoration: none;
-      color: var(--text-body);
-      transition: background 0.3s, color 0.3s;
-    }
-
-    .connect-link:hover {
-      background: var(--navy-light);
-      color: var(--white);
-    }
-
-    .connect-link-label {
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .connect-link-meta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .connect-link:hover .connect-link-meta {
-      color: var(--wood);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 2.5rem clamp(2rem, 8vw, 8rem);
-      border-top: 1px solid rgba(196, 134, 46, 0.15);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .footer-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      color: var(--wood);
-      text-transform: uppercase;
-      opacity: 0.6;
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(24px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-
-      .about-strip {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .connect-section {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-    }
-  </style>
+  <title>Ethan Graham — CS Student & Developer</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ── HERO ── -->
+  <!-- ══════════════════════════════
+       HERO
+  ══════════════════════════════ -->
   <section class="hero">
     <div class="hero-bg-lines"></div>
 
     <nav class="nav-bar">
       <div class="nav-logo">EG / Portfolio</div>
       <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
-        <li><a href="#connect">Connect</a></li>
+        <li><a href="#connect">Contact</a></li>
         <li><a href="https://github.com/etgraham9" target="_blank">GitHub</a></li>
       </ul>
     </nav>
 
     <div class="hero-content">
-      <div class="hero-eyebrow">Portfolio — 2024</div>
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        Open to Opportunities
+      </div>
+      <div class="hero-eyebrow">Computer Science · UNC Charlotte</div>
       <h1 class="hero-name">Ethan<br><em>Graham</em></h1>
-      <p class="hero-tagline">Developer and craftsman — building with code and with wood. Precision in every detail, purpose in every project.</p>
+      <p class="hero-tagline">Developer and craftsman — building with code and with wood. Proficient in multiple languages with a strong analytical mindset for solving complex problems.</p>
       <div class="hero-cta">
-        <a href="#projects" class="btn-primary">
-          View Projects
-          <span>→</span>
-        </a>
-        <a href="#connect" class="btn-secondary">
-          Get in Touch
-        </a>
+        <a href="#projects" class="btn-primary">View Projects →</a>
+        <a href="Ethan_Graham_Resume.pdf" download class="btn-secondary">⬇ Download Resume</a>
       </div>
     </div>
 
     <div class="hero-scroll-hint">
-      <div class="scroll-line">
-        <span>Scroll</span>
+      <div class="scroll-line"><span>Scroll</span></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       ABOUT STRIP
+  ══════════════════════════════ -->
+  <div class="about-strip">
+    <div class="about-item">
+      <div class="about-item-label">Degree</div>
+      <div class="about-item-value">B.S. Computer Science</div>
+    </div>
+    <div class="about-item">
+      <div class="about-item-label">Minor</div>
+      <div class="about-item-value">Mathematics</div>
+    </div>
+    <div class="about-item">
+      <div class="about-item-label">GPA</div>
+      <div class="about-item-value">3.4 · UNC Charlotte</div>
+    </div>
+    <div class="about-item">
+      <div class="about-item-label">Status</div>
+      <div class="about-item-value">Seeking Summer Internship</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       BIO
+  ══════════════════════════════ -->
+  <section class="bio-section" id="about">
+    <div class="bio-photo-col">
+      <div class="bio-avatar">
+        <span class="bio-avatar-icon">👤</span>
+        <span>Photo</span>
+      </div>
+    </div>
+    <div class="bio-text-col">
+      <div class="section-eyebrow">About Me</div>
+      <h2>Developer, Craftsman,<br>Problem Solver</h2>
+      <p>
+        I'm a junior at UNC Charlotte pursuing a Bachelor of Science in Computer Science
+        with a minor in Mathematics. I'm proficient in multiple programming languages and
+        possess strong analytical skills built through both coursework and hands-on projects.
+      </p>
+      <p>
+        My ability to devise innovative solutions to complex problems makes me a collaborative
+        asset on any technical team. Outside of code, I apply the same precision and care to
+        woodworking — where craftsmanship and problem solving are equally important.
+      </p>
+      <p>
+        I'm actively seeking a summer internship to further my growth and contribute
+        meaningfully in a technical environment. I'm a member of the UNCC Association for
+        Computing Machinery and the 49th Security Division.
+      </p>
+      <div class="bio-resume-btn">
+        <a href="Ethan_Graham_Resume.pdf" download class="btn-primary">⬇ Download Resume</a>
+        <a href="#connect" class="btn-secondary">Get in Touch</a>
       </div>
     </div>
   </section>
 
-  <!-- ── ABOUT STRIP ── -->
-  <div class="about-strip">
-    <div class="about-item">
-      <div class="about-item-label">Role</div>
-      <div class="about-item-value">Developer & Craftsman</div>
-    </div>
-    <div class="about-item">
-      <div class="about-item-label">Institution</div>
-      <div class="about-item-value">UNC Charlotte</div>
-    </div>
-    <div class="about-item">
-      <div class="about-item-label">Focus</div>
-      <div class="about-item-value">Problem Solving</div>
-    </div>
-  </div>
+  <!-- ══════════════════════════════
+       SKILLS
+  ══════════════════════════════ -->
+  <section class="skills-section" id="skills">
+    <div class="section-eyebrow">Technical Skills</div>
+    <h2>Tools &amp; Technologies</h2>
 
-  <!-- ── PROJECTS ── -->
+    <div class="skills-grid">
+      <div class="skill-category">
+        <div class="skill-category-label">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">Assembly</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-category-label">Software &amp; Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">VSCode</span>
+          <span class="skill-tag">Eclipse</span>
+          <span class="skill-tag">Android Studio</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">SQL Studio</span>
+          <span class="skill-tag">Wireshark</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-category-label">Operating Systems</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">Windows</span>
+          <span class="skill-tag">macOS</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-category-label">Creative</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Adobe Photoshop</span>
+          <span class="skill-tag">Adobe Illustrator</span>
+          <span class="skill-tag">Microsoft Office</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="certifications-row">
+      <div class="skill-category-label">Certifications</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Microsoft Word</span>
+        <span class="skill-tag">Microsoft PowerPoint</span>
+        <span class="skill-tag">Adobe Illustrator</span>
+        <span class="skill-tag">Adobe Photoshop</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       EXPERIENCE
+  ══════════════════════════════ -->
+  <section class="experience-section" id="experience">
+    <div class="section-eyebrow">Experience &amp; Education</div>
+    <h2>Background</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Aug 2022 – Present</div>
+        <div class="timeline-title">B.S. Computer Science</div>
+        <div class="timeline-org">University of North Carolina at Charlotte · 3.4 GPA</div>
+        <div class="timeline-desc">
+          Minor in Mathematics. Active member of the UNCC Association for Computing Machinery,
+          49th Security Division, and volunteer Disability Note Taker.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jun – Aug 2023</div>
+        <div class="timeline-title">Counselor</div>
+        <div class="timeline-org">Washington Elementary Boys and Girls Club of America · Raleigh, NC</div>
+        <div class="timeline-desc">
+          Provided instructional activities and youth mentorship, developing communication
+          and leadership skills while supporting student development.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jul – Aug 2021</div>
+        <div class="timeline-title">Intern</div>
+        <div class="timeline-org">Raleigh Summer Youth Employment Program · Raleigh, NC</div>
+        <div class="timeline-desc">
+          Operationalized business strategy for two regional businesses, gaining hands-on
+          experience in applied problem solving and organizational operations.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2018 – 2022</div>
+        <div class="timeline-title">International Baccalaureate Diploma</div>
+        <div class="timeline-org">Millbrook High School · Raleigh, NC · 3.9 GPA</div>
+        <div class="timeline-desc">
+          Completed the IB Diploma Program. Served on the Millbrook Executive Board and
+          IB Equity and Access Committee. Competed in Varsity Cross Country and Track &amp; Field.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       PORTFOLIO PROJECTS
+  ══════════════════════════════ -->
   <section class="projects-section" id="projects">
     <div class="section-header">
-      <h2 class="section-title">Selected<br>Work</h2>
+      <h2 class="section-title">Portfolio<br>Showcase</h2>
       <span class="section-count">02 Projects</span>
     </div>
 
     <div class="projects-grid">
-
       <a class="project-card" href="clientproject/index.html">
         <div class="project-number">01 — Craft</div>
         <div class="project-icon">🪵</div>
         <h3 class="project-title">Woodworking Showcase</h3>
-        <p class="project-desc">Custom woodworking projects demonstrating fine craftsmanship, material intuition, and an eye for form. Each piece is built with intention — from concept to final finish.</p>
-        <span class="project-link">
-          View Portfolio
-          <span class="project-link-arrow">→</span>
-        </span>
+        <p class="project-desc">A hobby showcase for my father's woodworking projects demonstrating fine craftsmanship, material intuition, and an eye for form. Each piece built with intention — from concept to final finish.</p>
+        <div class="project-tech-tags">
+          <span class="project-tech-tag">HTML</span>
+          <span class="project-tech-tag">CSS</span>
+          <span class="project-tech-tag">JavaScript</span>
+        </div>
+        <span class="project-link">View Portfolio <span class="project-link-arrow">→</span></span>
       </a>
 
       <a class="project-card" href="laffey/index.html">
         <div class="project-number">02 — Development</div>
         <div class="project-icon">⚙️</div>
         <h3 class="project-title">Laffey Journey</h3>
-        <p class="project-desc">An immersive project showcase documenting the Laffey journey from inception to execution — exploring the intersection of technical thinking and creative problem solving.</p>
-        <span class="project-link">
-          Explore Project
-          <span class="project-link-arrow">→</span>
-        </span>
+        <p class="project-desc">An immersive showcase documenting my grandfather's Laffey journey from beginning to end — exploring the journeys we make and my familys history.</p>
+        <div class="project-tech-tags">
+          <span class="project-tech-tag">HTML</span>
+          <span class="project-tech-tag">CSS</span>
+          <span class="project-tech-tag">JavaScript</span>
+        </div>
+        <span class="project-link">Explore Project <span class="project-link-arrow">→</span></span>
       </a>
-
     </div>
   </section>
 
-  <!-- ── CONNECT ── -->
+  <!-- ══════════════════════════════
+       CODE PROJECTS
+  ══════════════════════════════ -->
+  <section class="code-projects-section">
+    <div class="section-eyebrow">Relevant Projects</div>
+    <h2>Academic &amp; Technical Work</h2>
+
+    <div class="code-projects-list">
+      <div class="code-project-item">
+        <span class="code-lang-badge">Python</span>
+        <p class="code-project-desc">
+          Leveraged Pandas and Matplotlib to process output from UNCC's Centaurus supercomputer,
+          plotting how the number of cores used in parallel matrix multiplication affected execution
+          time and speedup across different problem sizes.
+        </p>
+      </div>
+      <div class="code-project-item">
+        <span class="code-lang-badge">SQL</span>
+        <p class="code-project-desc">
+          Designed and built a fully functional relational database system to manage patient
+          medications, payments, and surgeries, as well as doctor and nurse assignments and
+          care instructions across a simulated hospital environment.
+        </p>
+      </div>
+      <div class="code-project-item">
+        <span class="code-lang-badge">R</span>
+        <p class="code-project-desc">
+          Used the R libraries <em>maps</em>, <em>dplyr</em>, and <em>ggplot2</em> to analyze EPA air quality
+          data over several years and produce a pollution concentration map of North Carolina for
+          2023, detailing geographic distributions of key pollutants.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       CONNECT
+  ══════════════════════════════ -->
   <section class="connect-section" id="connect">
     <div class="connect-text">
       <h2 class="section-title">Let's<br>Connect</h2>
-      <p>Open to new opportunities, collaborations, and conversations. Find me across the web or explore my academic work.</p>
+      <p>I'm actively seeking a summer internship and open to any technical opportunities. Feel free to reach out directly or send a message below.</p>
+      <a class="connect-email" href="mailto:etg478@icloud.com">✉ etg478@icloud.com</a>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="What would you like to discuss?" required></textarea>
+        </div>
+        <div>
+          <button type="submit" class="btn-primary">Send Message →</button>
+        </div>
+      </form>
     </div>
 
-    <div class="connect-links">
-      <a class="connect-link" href="https://github.com/etgraham9" target="_blank">
-        <span class="connect-link-label">GitHub</span>
-        <span class="connect-link-meta">etgraham9 →</span>
-      </a>
-      <a class="connect-link" href="https://www.linkedin.com/in/ethan-graham-b6b40b251/" target="_blank">
-        <span class="connect-link-label">LinkedIn</span>
-        <span class="connect-link-meta">View Profile →</span>
-      </a>
-      <a class="connect-link" href="https://webpages.charlotte.edu/egraha24/" target="_blank">
-        <span class="connect-link-label">UNC Charlotte</span>
-        <span class="connect-link-meta">University Page →</span>
-      </a>
-      <a class="connect-link" href="itis3135/index.html">
-        <span class="connect-link-label">ITIS 3135</span>
-        <span class="connect-link-meta">Coursework →</span>
-      </a>
+    <div class="connect-links-col">
+      <div class="connect-links">
+        <a class="connect-link" href="https://github.com/etgraham9" target="_blank">
+          <span class="connect-link-label">GitHub</span>
+          <span class="connect-link-meta">etgraham9 →</span>
+        </a>
+        <a class="connect-link" href="https://www.linkedin.com/in/ethan-graham-b6b40b251/" target="_blank">
+          <span class="connect-link-label">LinkedIn</span>
+          <span class="connect-link-meta">View Profile →</span>
+        </a>
+        <a class="connect-link" href="https://webpages.charlotte.edu/egraha24/" target="_blank">
+          <span class="connect-link-label">UNC Charlotte</span>
+          <span class="connect-link-meta">University Page →</span>
+        </a>
+        <a class="connect-link" href="itis3135/index.html">
+          <span class="connect-link-label">ITIS 3135</span>
+          <span class="connect-link-meta">Coursework →</span>
+        </a>
+        <a class="connect-link" href="Ethan_Graham_Resume.pdf" download>
+          <span class="connect-link-label">Resume</span>
+          <span class="connect-link-meta">Download PDF →</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
+  <!-- ══════════════════════════════
+       FOOTER
+  ══════════════════════════════ -->
   <footer>
-    <span class="footer-copy">© 2024 Ethan Graham. All rights reserved.</span>
-    <span class="footer-tag">Developer · Craftsman · Problem Solver</span>
+    <span class="footer-copy">© 2026 Ethan Graham. All rights reserved.</span>
+    <span class="footer-tag">Developer · Designer · Problem Solver</span>
   </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.textContent = '✓ Sent!';
+      btn.style.background = '#2d6a4f';
+      btn.disabled = true;
+      e.target.reset();
+      setTimeout(() => {
+        btn.textContent = 'Send Message →';
+        btn.style.background = '';
+        btn.disabled = false;
+      }, 4000);
+    }
+
+    // Scroll-spy: highlight active nav link
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.style.color = '';
+            if (link.getAttribute('href') === '#' + entry.target.id) {
+              link.style.color = 'var(--wood-light)';
+            }
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
 
 </body>
 </html>
