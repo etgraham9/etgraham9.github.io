@@ -77,21 +77,31 @@ const toggleBtn = document.getElementById("themeToggle");
 const themeLink = document.getElementById("themeStylesheet");
 
 // Load saved theme
-let currentTheme = localStorage.getItem("theme") || "modern";
-applyTheme(currentTheme);
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("themeToggle");
+  const themeLink = document.getElementById("themeStylesheet");
 
-toggleBtn.addEventListener("click", () => {
-  currentTheme = currentTheme === "modern" ? "retro" : "modern";
-  applyTheme(currentTheme);
-  localStorage.setItem("theme", currentTheme);
-});
-
-function applyTheme(theme) {
-  if (theme === "retro") {
-    themeLink.href = "style2.css";
-    toggleBtn.textContent = "Switch to Modern";
-  } else {
-    themeLink.href = "style.css";
-    toggleBtn.textContent = "Switch to Retro";
+  if (!toggleBtn || !themeLink) {
+    console.error("Theme toggle elements not found!");
+    return;
   }
-}
+
+  let currentTheme = localStorage.getItem("theme") || "modern";
+  applyTheme(currentTheme);
+
+  toggleBtn.addEventListener("click", () => {
+    currentTheme = currentTheme === "modern" ? "retro" : "modern";
+    applyTheme(currentTheme);
+    localStorage.setItem("theme", currentTheme);
+  });
+
+  function applyTheme(theme) {
+    if (theme === "retro") {
+      themeLink.setAttribute("href", "style2.css");
+      toggleBtn.textContent = "Switch to Modern";
+    } else {
+      themeLink.setAttribute("href", "style.css");
+      toggleBtn.textContent = "Switch to Retro";
+    }
+  }
+});
