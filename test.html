@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ethan Graham — Windows 98 Portfolio</title>
+<style>
+/* ===== Desktop ===== */
+body{margin:0;background:teal;font-family:Tahoma, sans-serif;overflow:hidden}
+.desktop{width:100vw;height:100vh;position:relative}
+
+/* ===== Icons ===== */
+.icon{width:80px;text-align:center;color:#fff;margin:12px;cursor:default}
+.icon img{width:32px;image-rendering:pixelated}
+.icon:hover{background:rgba(255,255,255,0.2)}
+
+/* ===== Taskbar ===== */
+.taskbar{position:absolute;bottom:0;width:100%;height:40px;background:#c0c0c0;border-top:2px solid #fff;display:flex;align-items:center}
+.start-btn{margin:4px;padding:5px 12px;border:2px solid;border-color:#fff #808080 #808080 #fff;background:#c0c0c0;font-weight:bold;cursor:pointer}
+.taskbar-windows{display:flex;gap:4px;margin-left:10px}
+.task-item{padding:4px 8px;border:2px solid;border-color:#fff #808080 #808080 #fff;background:#c0c0c0;cursor:pointer}
+
+/* ===== Windows ===== */
+.window{position:absolute;width:520px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;display:none}
+.title-bar{background:navy;color:#fff;padding:4px;display:flex;justify-content:space-between;cursor:move}
+.window-controls span{background:#c0c0c0;border:1px solid #000;padding:0 6px;margin-left:3px;cursor:pointer}
+.window-content{padding:10px;background:#dcdcdc;max-height:400px;overflow:auto}
+
+/* ===== Buttons ===== */
+button,a.button{background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;padding:4px 10px;text-decoration:none;color:#000}
+button:active,a.button:active{border-color:#808080 #fff #fff #808080}
+
+/* ===== Content styles ===== */
+h2{margin-top:0}
+.tag{display:inline-block;border:1px solid #808080;padding:2px 4px;margin:2px;background:#f0f0f0}
+.section{margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="desktop">
+  <!-- Icons -->
+  <div class="icon" ondblclick="openWindow('about')"><img src="https://win98icons.alexmeub.com/icons/png/notepad-0.png"><div>About.txt</div></div>
+  <div class="icon" ondblclick="openWindow('skills')"><img src="https://win98icons.alexmeub.com/icons/png/directory_open_file_mydocs-4.png"><div>Skills</div></div>
+  <div class="icon" ondblclick="openWindow('projects')"><img src="https://win98icons.alexmeub.com/icons/png/directory_open-4.png"><div>Projects</div></div>
+  <div class="icon" ondblclick="openWindow('experience')"><img src="https://win98icons.alexmeub.com/icons/png/address_book-0.png"><div>Experience</div></div>
+  <div class="icon" ondblclick="openWindow('contact')"><img src="https://win98icons.alexmeub.com/icons/png/outlook_express-0.png"><div>Contact</div></div>
+
+  <!-- ABOUT -->
+  <div class="window" id="about" style="top:80px;left:120px">
+    <div class="title-bar" onmousedown="dragStart(event,this.parentElement)">
+      <span>About.txt</span>
+      <div class="window-controls"><span onclick="closeWindow('about')">X</span></div>
+    </div>
+    <div class="window-content">
+      <h2>Ethan Graham</h2>
+      <p>Computer Science student at UNC Charlotte (GPA 3.4) with a Mathematics minor.</p>
+      <p>Developer and problem solver with experience across multiple programming languages and technical domains.</p>
+      <a class="button" href="Ethan_Graham_Resume.pdf" download>Download Resume</a>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="window" id="skills" style="top:120px;left:200px">
+    <div class="title-bar" onmousedown="dragStart(event,this.parentElement)">
+      <span>Skills</span>
+      <div class="window-controls"><span onclick="closeWindow('skills')">X</span></div>
+    </div>
+    <div class="window-content">
+      <div class="section"><b>Languages:</b><br>
+        <span class="tag">Python</span><span class="tag">Java</span><span class="tag">C++</span><span class="tag">C</span><span class="tag">SQL</span><span class="tag">R</span><span class="tag">JavaScript</span>
+      </div>
+      <div class="section"><b>Tools:</b><br>
+        <span class="tag">Git</span><span class="tag">VSCode</span><span class="tag">Android Studio</span><span class="tag">MongoDB</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="window" id="projects" style="top:160px;left:260px">
+    <div class="title-bar" onmousedown="dragStart(event,this.parentElement)">
+      <span>Projects</span>
+      <div class="window-controls"><span onclick="closeWindow('projects')">X</span></div>
+    </div>
+    <div class="window-content">
+      <p><b>Woodworking Showcase</b><br>HTML/CSS/JS portfolio for craftsmanship.</p>
+      <p><b>Laffey Journey</b><br>Interactive storytelling site.</p>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="window" id="experience" style="top:200px;left:320px">
+    <div class="title-bar" onmousedown="dragStart(event,this.parentElement)">
+      <span>Experience</span>
+      <div class="window-controls"><span onclick="closeWindow('experience')">X</span></div>
+    </div>
+    <div class="window-content">
+      <p><b>UNC Charlotte</b> — B.S. Computer Science (2022–Present)</p>
+      <p><b>Boys & Girls Club</b> — Counselor (2023)</p>
+      <p><b>Summer Youth Program</b> — Intern (2021)</p>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="window" id="contact" style="top:240px;left:380px">
+    <div class="title-bar" onmousedown="dragStart(event,this.parentElement)">
+      <span>Contact</span>
+      <div class="window-controls"><span onclick="closeWindow('contact')">X</span></div>
+    </div>
+    <div class="window-content">
+      <p>Email: etg478@icloud.com</p>
+      <a class="button" href="https://github.com/etgraham9" target="_blank">GitHub</a>
+      <a class="button" href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="start-btn">Start</div>
+    <div class="taskbar-windows" id="taskbarWindows"></div>
+  </div>
+</div>
+
+<script>
+let currentWindow=null,offsetX,offsetY,z=1;
+
+function openWindow(id){
+  const w=document.getElementById(id);
+  w.style.display='block';
+  w.style.zIndex=++z;
+}
+
+function closeWindow(id){
+  document.getElementById(id).style.display='none';
+}
+
+function dragStart(e,win){
+  currentWindow=win;
+  offsetX=e.clientX-win.offsetLeft;
+  offsetY=e.clientY-win.offsetTop;
+  win.style.zIndex=++z;
+  document.onmousemove=dragMove;
+  document.onmouseup=dragEnd;
+}
+
+function dragMove(e){
+  if(!currentWindow)return;
+  currentWindow.style.left=(e.clientX-offsetX)+'px';
+  currentWindow.style.top=(e.clientY-offsetY)+'px';
+}
+
+function dragEnd(){
+  document.onmousemove=null;
+  currentWindow=null;
+}
+</script>
+
+</body>
+</html>
