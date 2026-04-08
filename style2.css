@@ -105,6 +105,7 @@ button:active {
   padding: 2px 6px;
   border: 1px solid #808080;
   margin-bottom: 6px;
+  margin-top: 6px;
 }
 
 .status-dot {
