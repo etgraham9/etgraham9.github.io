@@ -72,3 +72,26 @@ window.addEventListener('scroll', () => {
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+const toggleBtn = document.getElementById("themeToggle");
+const themeLink = document.getElementById("themeStylesheet");
+
+// Load saved theme
+let currentTheme = localStorage.getItem("theme") || "modern";
+applyTheme(currentTheme);
+
+toggleBtn.addEventListener("click", () => {
+  currentTheme = currentTheme === "modern" ? "retro" : "modern";
+  applyTheme(currentTheme);
+  localStorage.setItem("theme", currentTheme);
+});
+
+function applyTheme(theme) {
+  if (theme === "retro") {
+    themeLink.href = "style2.css";
+    toggleBtn.textContent = "Switch to Modern";
+  } else {
+    themeLink.href = "style.css";
+    toggleBtn.textContent = "Switch to Retro";
+  }
+}
