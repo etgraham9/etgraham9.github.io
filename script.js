@@ -98,10 +98,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function applyTheme(theme) {
     if (theme === "retro") {
       themeLink.setAttribute("href", "style2.css");
-      toggleBtn.textContent = "Switch to Modern";
+      toggleBtn.textContent = "Switch to Retro";
     } else {
       themeLink.setAttribute("href", "style.css");
-      toggleBtn.textContent = "Switch to Retro";
+      toggleBtn.textContent = "Switch to Modern";
     }
   }
 });
