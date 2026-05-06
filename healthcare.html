@@ -218,7 +218,7 @@
 
         <div style="margin-top:32px; padding:24px 28px; background:var(--surface); border:1px solid var(--border); border-radius:4px;">
           <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--text-dim); margin-bottom:12px; text-transform:uppercase;">A Note</div>
-          <p style="color:var(--text-dim); font-size:14px; line-height:1.8;">The prices in this game reflect <strong style="color:var(--text)">average cash pay costs</strong> for uninsured patients, pulled from FAIR Health, Healthcare Bluebook, and CMS data. Real costs vary a lot depending on where you live, what insurance you have, and what facility you use.</p>
+          <p style="color:var(--text-dim); font-size:14px; line-height:1.8;">The prices in this game reflect <strong style="color:var(--text)">average cash pay costs</strong> for uninsured patients. Real costs vary a lot depending on where you live, what insurance you have, and what facility you use.</p>
         </div>
 
         <div style="text-align:center; margin-top:36px;">
@@ -237,8 +237,8 @@
           <div style="background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:18px 24px;">
             <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:6px;">Game Pricing Data</div>
             <p style="font-size:14px; line-height:1.7; color:var(--text-dim);">
-              <strong style="color:var(--text)">FAIR Health Consumer</strong> — national database of medical cost benchmarks used to estimate fair prices for procedures. <a href="https://www.fairhealth.org/" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(215,0,0,0.3);">fairhealth.org</a><br><br>
-              <strong style="color:var(--text)">Healthcare Bluebook</strong> — independent pricing guide for common medical procedures. <a href="https://www.healthcarebluebook.com/" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(215,0,0,0.3);">healthcarebluebook.com</a><br><br>
+              <strong style="color:var(--text)">sidecar health - care calculator</strong> — national database of medical cost benchmarks used to estimate fair prices for procedures. <a href="https://cost.sidecarhealth.com/ts/appendix-removal-cost-by-state" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(215,0,0,0.3);">sidecarhealth.com</a><br><br>
+              <strong style="color:var(--text)">BabyList</strong> — Online guide for expectant mothers with resources to prepare them. <a href="https://www.babylist.com/hello-baby/childbirth-without-insurance" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(215,0,0,0.3);">babylist.com</a><br><br>
               <strong style="color:var(--text)">KFF (Kaiser Family Foundation) — Insulin Price Changes</strong> — issue brief tracking insulin pricing trends before and after the Inflation Reduction Act. <a href="https://www.kff.org/medicare/insulin-costs-and-coverage-in-medicare-part-d/" target="_blank" style="color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(215,0,0,0.3);">kff.org</a>
             </p>
           </div>
@@ -268,7 +268,7 @@
 
 <footer>
   <div class="container">
-    Prices sourced from FAIR Health, CMS, Healthcare Bluebook, and peer-reviewed literature. For educational purposes. See sources section above for full citations.
+    Prices sourced from a variety of online medical resources and articles. For educational purposes. See sources section above for full citations.
   </div>
 </footer>
 
@@ -279,22 +279,22 @@
       title: "Appendectomy (Emergency Surgery)",
       desc: "A standard emergency appendectomy, surgical removal of the appendix, performed at a hospital with general anesthesia. One of the most common emergency surgeries in the U.S.",
       context: "Average cash pay price, uninsured patient, U.S. hospital",
-      price: 33000,
-      priceLabel: "$33,000",
-      note: "This is the average cost. Prices range from $12,000 to $70,000+ depending on location and facility.",
-      sourceUrl: "https://www.fairhealth.org/",
-      sourceLabel: "FAIR Health Consumer"
+      price: 9000,
+      priceLabel: "$9,000",
+      note: "This is the average cost. Prices range from $7,000 to $10,000+ depending on location and facility.",
+      sourceUrl: "https://cost.sidecarhealth.com/ts/appendix-removal-cost-by-state",
+      sourceLabel: "care calculator"
     },
     {
       category: "Childbirth",
-      title: "Vaginal Delivery (Uncomplicated)",
-      desc: "A routine vaginal birth at a hospital with standard prenatal care not included. No C-section, no significant complications. Just the delivery itself.",
+      title: "Childbirth/Delivery",
+      desc: "A routine birth at a hospital with standard prenatal care not included. No C-section, no significant complications. Just the delivery itself.",
       context: "Average facility + physician fees, uninsured, U.S. hospital",
-      price: 14700,
-      priceLabel: "$14,700",
-      note: "This includes hospital stay but excludes prenatal visits, labs, and anesthesia. Total pregnancy care can exceed $30,000.",
-      sourceUrl: "https://www.healthcarebluebook.com/",
-      sourceLabel: "Healthcare Bluebook"
+      price: 15700,
+      priceLabel: "$15,700",
+      note: "This includes hospital stay but excludes prenatal visits, labs, anesthesia, and complications. Total pregnancy care can exceed $30,000.",
+      sourceUrl: "https://www.babylist.com/hello-baby/childbirth-without-insurance",
+      sourceLabel: "BabyList"
     },
     {
       category: "Chronic Medication",
