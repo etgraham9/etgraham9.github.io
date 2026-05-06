@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Did That Cost? | U.S. Medical Pricing Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a3a;
+    --accent: #ff3b3b;
+    --accent2: #ff8c42;
+    --green: #2ecc71;
+    --yellow: #f1c40f;
+    --text: #e8e8f0;
+    --text-dim: #7a7a9a;
+    --red-glow: 0 0 30px rgba(255,59,59,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* SCANLINE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.07) 2px,
+      rgba(0,0,0,0.07) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 32px 0 24px;
+    text-align: center;
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .game-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 80px);
+    letter-spacing: 2px;
+    line-height: 0.9;
+    color: var(--text);
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  /* PROGRESS BAR */
+  .progress-track {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 28px 0 16px;
+  }
+
+  .progress-pip {
+    width: 48px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background 0.4s ease;
+  }
+
+  .progress-pip.done { background: var(--green); }
+  .progress-pip.active { background: var(--accent); }
+
+  /* MAIN GAME AREA */
+  #game-area {
+    padding: 32px 0 60px;
+  }
+
+  /* INTRO SCREEN */
+  #intro-screen {
+    text-align: center;
+    padding: 60px 0;
+  }
+
+  .intro-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    display: block;
+    filter: grayscale(0.2);
+  }
+
+  #intro-screen h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  #intro-screen p {
+    color: var(--text-dim);
+    max-width: 480px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* QUESTION CARD */
+  #question-screen { display: none; }
+
+  .round-indicator {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .round-indicator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .expense-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .expense-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--accent);
+  }
+
+  .expense-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .expense-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 44px);
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .expense-desc {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .expense-context {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: var(--surface2);
+    border-left: 2px solid var(--accent2);
+    border-radius: 2px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ATTEMPTS */
+  .attempts-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 28px 0 20px;
+  }
+
+  .attempts-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .hearts {
+    display: flex;
+    gap: 8px;
+  }
+
+  .heart {
+    font-size: 22px;
+    transition: all 0.3s ease;
+  }
+
+  .heart.lost {
+    filter: grayscale(1) opacity(0.3);
+    transform: scale(0.85);
+  }
+
+  /* INPUT AREA */
+  .input-group {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .dollar-wrap {
+    position: relative;
+    flex: 1;
+  }
+
+  .dollar-sign {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    color: var(--text-dim);
+  }
+
+  .guess-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 18px 18px 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 24px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  .guess-input::-webkit-outer-spin-button,
+  .guess-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .guess-input:focus { border-color: var(--accent); }
+
+  /* FEEDBACK */
+  .feedback-msg {
+    margin: 20px 0;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .feedback-msg.higher {
+    display: flex;
+    background: rgba(255,140,66,0.12);
+    border: 1px solid rgba(255,140,66,0.3);
+    color: var(--accent2);
+  }
+
+  .feedback-msg.lower {
+    display: flex;
+    background: rgba(255,59,59,0.1);
+    border: 1px solid rgba(255,59,59,0.3);
+    color: var(--accent);
+  }
+
+  .feedback-msg.correct {
+    display: flex;
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    color: var(--green);
+  }
+
+  /* REVEAL */
+  .reveal-box {
+    display: none;
+    text-align: center;
+    padding: 32px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-top: 24px;
+  }
+
+  .reveal-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .reveal-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-shadow: var(--red-glow);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .reveal-note {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .source-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .source-link:hover { color: var(--text); border-color: var(--text); }
+
+  /* HISTORY GUESSES */
+  .guess-history {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+  }
+
+  .guess-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 2px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    width: fit-content;
+  }
+
+  .guess-chip .arrow { font-size: 16px; }
+  .guess-chip.arrow-up { color: var(--accent2); border-color: rgba(255,140,66,0.3); }
+  .guess-chip.arrow-down { color: var(--accent); border-color: rgba(255,59,59,0.3); }
+  .guess-chip.arrow-correct { color: var(--green); border-color: rgba(46,204,113,0.3); }
+
+  /* BUTTONS */
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: #e02020;
+    transform: translateY(-1px);
+    box-shadow: var(--red-glow);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text-dim);
+    transform: translateY(-1px);
+  }
+
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* SUMMARY SCREEN */
+  #summary-screen { display: none; }
+
+  .summary-header {
+    text-align: center;
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .summary-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .score-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 90px;
+    color: var(--accent);
+    text-shadow: var(--red-glow);
+    line-height: 1;
+    margin: 12px 0 4px;
+  }
+
+  .score-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 20px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ROUND SUMMARIES */
+  .round-summary {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .round-summary::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+  }
+
+  .round-summary.won::before { background: var(--green); }
+  .round-summary.lost::before { background: var(--accent); }
+
+  .rs-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .rs-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    max-width: 65%;
+  }
+
+  .rs-price {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  .rs-guesses {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .rs-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .rs-tag.final-correct {
+    background: rgba(46,204,113,0.1);
+    border-color: rgba(46,204,113,0.3);
+    color: var(--green);
+  }
+
+  .rs-outcome {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .rs-outcome.won { color: var(--green); }
+  .rs-outcome.lost { color: var(--accent); }
+
+  /* FACTS SECTION */
+  .facts-section {
+    margin-top: 60px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+  }
+
+  .facts-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .facts-header h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+  }
+
+  .facts-header .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .facts-header .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    border: 1px solid rgba(255,59,59,0.3);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .fact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+    position: relative;
+  }
+
+  .fact-card:hover { border-color: rgba(255,59,59,0.3); }
+
+  .fact-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    position: absolute;
+    right: 28px;
+    top: 16px;
+    color: var(--border);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .fact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .fact-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    max-width: 80%;
+  }
+
+  .fact-card p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.75;
+    max-width: 85%;
+  }
+
+  .fact-card .fact-stat {
+    margin-top: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    padding: 8px 14px;
+    background: rgba(255,59,59,0.07);
+    border-left: 2px solid var(--accent);
+    display: inline-block;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    margin-top: 60px;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  @keyframes pulse-accent {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,59,59,0.3); }
+    50% { box-shadow: 0 0 0 8px rgba(255,59,59,0); }
+  }
+
+  .animate-in { animation: fadeUp 0.4s ease forwards; }
+  .shake { animation: shake 0.3s ease; }
+  .pulse { animation: pulse-accent 0.6s ease; }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .expense-card { padding: 24px 20px; }
+    .input-group { flex-direction: column; }
+    .rs-top { flex-direction: column; gap: 8px; }
+    .rs-name { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="game-label">A game about american healthcare</div>
+    <h1>WHAT DID<br>THAT <span>COST?</span></h1>
+    <p class="subtitle">Guess the price. Confront the system.</p>
+  </header>
+
+  <!-- PROGRESS -->
+  <div class="progress-track" id="progress-track">
+    <div class="progress-pip" id="pip-0"></div>
+    <div class="progress-pip" id="pip-1"></div>
+    <div class="progress-pip" id="pip-2"></div>
+  </div>
+
+  <!-- GAME AREA -->
+  <div id="game-area">
+
+    <!-- INTRO -->
+    <div id="intro-screen">
+      <span class="intro-icon">🏥</span>
+      <h2>Think You Know<br>What Healthcare Costs?</h2>
+      <p>You'll be shown three real medical expenses from the United States. For each one, you have <strong>3 attempts</strong> to guess the price. After each wrong guess, you'll know whether to go higher or lower.</p>
+      <p style="margin-top:12px;">Prices are based on average costs without insurance, drawn from verified sources.</p>
+      <br>
+      <button class="btn btn-primary" onclick="startGame()">START GAME</button>
+    </div>
+
+    <!-- QUESTION -->
+    <div id="question-screen">
+      <div class="round-indicator" id="round-indicator">Round 1 of 3</div>
+
+      <div class="expense-card animate-in" id="expense-card">
+        <div class="expense-category" id="expense-category"></div>
+        <div class="expense-title" id="expense-title"></div>
+        <div class="expense-desc" id="expense-desc"></div>
+        <div class="expense-context" id="expense-context"></div>
+      </div>
+
+      <div class="attempts-row">
+        <span class="attempts-label">Attempts Remaining</span>
+        <div class="hearts" id="hearts-display">
+          <span class="heart" id="h0">❤️</span>
+          <span class="heart" id="h1">❤️</span>
+          <span class="heart" id="h2">❤️</span>
+        </div>
+      </div>
+
+      <div class="guess-history" id="guess-history"></div>
+
+      <div class="input-group" id="input-group">
+        <div class="dollar-wrap">
+          <span class="dollar-sign">$</span>
+          <input
+            type="number"
+            class="guess-input"
+            id="guess-input"
+            placeholder="0"
+            min="0"
+            onkeydown="if(event.key==='Enter') submitGuess()"
+          >
+        </div>
+        <button class="btn btn-primary" id="guess-btn" onclick="submitGuess()">GUESS</button>
+      </div>
+
+      <div class="feedback-msg" id="feedback-msg">
+        <span id="feedback-icon">↑</span>
+        <span id="feedback-text"></span>
+      </div>
+
+      <!-- REVEAL -->
+      <div class="reveal-box" id="reveal-box">
+        <div class="reveal-label">Actual Price</div>
+        <div class="reveal-price" id="reveal-price"></div>
+        <div class="reveal-note" id="reveal-note"></div>
+        <a class="source-link" id="reveal-source" href="#" target="_blank">View Source →</a>
+        <br><br>
+        <button class="btn btn-primary" id="next-btn" onclick="nextRound()">NEXT ROUND →</button>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div id="summary-screen">
+      <div class="summary-header">
+        <div class="game-label">Game Over</div>
+        <h2>YOUR RESULTS</h2>
+        <div class="score-display" id="final-score">0</div>
+        <div class="score-label">Rounds Solved</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-val" id="stat-guesses">0</div>
+          <div class="stat-key">Total Guesses</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-closest">$0</div>
+          <div class="stat-key">Closest Guess</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-val" id="stat-solved">0/3</div>
+          <div class="stat-key">Solved</div>
+        </div>
+      </div>
+
+      <div id="round-summaries"></div>
+
+      <!-- FACTS -->
+      <div class="facts-section">
+        <div class="facts-header">
+          <h3>THE REALITY</h3>
+          <div class="line"></div>
+          <div class="tag">U.S. HEALTHCARE CRISIS</div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-number">01</div>
+          <div class="fact-eyebrow">Spending</div>
+          <h4>The U.S. Spends More Than Any Nation on Earth</h4>
+          <p>The United States spends over $4.5 trillion annually on healthcare — roughly $13,500 per person — yet ranks poorly among wealthy nations on outcomes like life expectancy, infant mortality, and preventable deaths. Americans pay twice as much as Canadians and Germans for comparable care.</p>
+          <div class="fact-stat">$13,500+ per capita annually (2023, CMS)</div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-number">02</div>
+          <div class="fact-eyebrow">Bankruptcy</div>
+          <h4>Medical Debt Is the #1 Cause of Bankruptcy</h4>
+          <p>More than half of U.S. personal bankruptcies are tied to medical debt, even among people who have insurance. About 100 million Americans carry medical debt — with one in four adults reporting they have skipped or delayed care because of cost fears. Medical bills push over 500,000 families into bankruptcy each year.</p>
+          <div class="fact-stat">~$220 billion in medical debt held by Americans (CFPB, 2022)</div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-number">03</div>
+          <div class="fact-eyebrow">Pricing Opacity</div>
+          <h4>Prices Are Hidden by Design</h4>
+          <p>Unlike any other developed country, the U.S. lacks a standard pricing system for medical care. The same MRI can cost $400 at one facility and $4,000 at another across the street. Hospitals are now legally required to post prices — but compliance is inconsistent, and the data is often incomprehensible to everyday patients.</p>
+          <div class="fact-stat">Price variation for same procedure: up to 10x within the same city</div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-number">04</div>
+          <div class="fact-eyebrow">Insurance</div>
+          <h4>Having Insurance Doesn't Mean You're Protected</h4>
+          <p>25 million Americans remain uninsured, but even insured patients face crushing costs from high deductibles, surprise billing, narrow networks, and denied claims. The average deductible for employer-sponsored insurance now exceeds $1,600. Nearly 40% of insured adults said they struggled to afford their deductible last year.</p>
+          <div class="fact-stat">Avg. employer plan deductible: $1,644 (KFF, 2023)</div>
+        </div>
+
+        <div class="fact-card">
+          <div class="fact-number">05</div>
+          <div class="fact-eyebrow">Systemic</div>
+          <h4>It's a System Problem, Not an Accident</h4>
+          <p>High healthcare costs in the U.S. are driven by a complex web of factors: lack of price negotiation, administrative overhead (up to 34% of hospital costs), pharmaceutical pricing, hospital consolidation, and a fee-for-service model that rewards more procedures rather than better outcomes. Many healthcare economists argue that meaningful reform requires structural change — not just expanded coverage.</p>
+          <div class="fact-stat">Administrative costs: 34.2% of total hospital expenditures (NEJM)</div>
+        </div>
+
+        <div style="margin-top:32px; padding:24px 28px; background:var(--surface); border:1px solid var(--border); border-radius:4px;">
+          <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:var(--text-dim); margin-bottom:12px; text-transform:uppercase;">A Note</div>
+          <p style="color:var(--text-dim); font-size:14px; line-height:1.8;">The prices in this game reflect <strong style="color:var(--text)">average cash-pay costs</strong> for uninsured patients, drawn from sources including FAIR Health, Healthcare Bluebook, and CMS data. Actual costs vary significantly by location, insurance status, and facility type. The purpose of this game is not to scare — it's to inform. A well-functioning healthcare system should not require patients to be financial experts to survive it.</p>
+        </div>
+
+        <div style="text-align:center; margin-top:36px;">
+          <button class="btn btn-secondary" onclick="resetGame()">↩ PLAY AGAIN</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /game-area -->
+</div>
+
+<footer>
+  <div class="container">
+    Prices sourced from FAIR Health, CMS, Healthcare Bluebook, and peer-reviewed literature. For educational purposes.
+  </div>
+</footer>
+
+<script>
+  const EXPENSES = [
+    {
+      category: "Emergency Care",
+      title: "Appendectomy (Emergency Surgery)",
+      desc: "A standard emergency appendectomy — surgical removal of the appendix — performed at a hospital with general anesthesia. One of the most common emergency surgeries in the U.S.",
+      context: "Average cash-pay price, uninsured patient, U.S. hospital",
+      price: 33000,
+      priceLabel: "$33,000",
+      note: "This is the average cost. Prices range from $12,000 to $70,000+ depending on location and facility.",
+      sourceUrl: "https://www.fairhealth.org/",
+      sourceLabel: "FAIR Health Consumer"
+    },
+    {
+      category: "Childbirth",
+      title: "Vaginal Delivery (Uncomplicated)",
+      desc: "A routine vaginal birth at a hospital with standard prenatal care not included. No C-section, no significant complications. Just the delivery itself.",
+      context: "Average facility + physician fees, uninsured, U.S. hospital",
+      price: 14700,
+      priceLabel: "$14,700",
+      note: "This includes hospital stay but excludes prenatal visits, labs, and anesthesia. Total pregnancy care can exceed $30,000.",
+      sourceUrl: "https://www.healthcarebluebook.com/",
+      sourceLabel: "Healthcare Bluebook"
+    },
+    {
+      category: "Chronic Medication",
+      title: "Insulin (1 Month Supply, Unbranded)",
+      desc: "A one-month supply of insulin for a Type 1 diabetic patient. This is a life-sustaining medication with no substitute.",
+      context: "Average U.S. list price without insurance or discount programs",
+      price: 98,
+      priceLabel: "$98",
+      note: "While insulin prices have dropped after legislation, list prices were $300–$400/month as recently as 2022. Canada averages ~$12 for the same vial.",
+      sourceUrl: "https://www.kff.org/health-costs/issue-brief/price-changes-for-insulins/",
+      sourceLabel: "KFF Health Policy"
+    }
+  ];
+
+  // Shuffle for variety (always use all 3)
+  function shuffle(arr) {
+    let a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  let expenses = [];
+  let currentRound = 0;
+  let attemptsLeft = 3;
+  let guessHistory = [];
+  let roundResults = [];
+  let currentGuesses = [];
+
+  function startGame() {
+    expenses = shuffle(EXPENSES);
+    currentRound = 0;
+    roundResults = [];
+    document.getElementById('intro-screen').style.display = 'none';
+    document.getElementById('question-screen').style.display = 'block';
+    loadRound();
+  }
+
+  function loadRound() {
+    attemptsLeft = 3;
+    currentGuesses = [];
+    guessHistory = [];
+
+    const e = expenses[currentRound];
+    document.getElementById('round-indicator').textContent = `Round ${currentRound + 1} of 3`;
+    document.getElementById('expense-category').textContent = e.category;
+    document.getElementById('expense-title').textContent = e.title;
+    document.getElementById('expense-desc').textContent = e.desc;
+    document.getElementById('expense-context').textContent = `📍 ${e.context}`;
+
+    // Reset hearts
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`h${i}`).classList.remove('lost');
+    }
+
+    // Reset UI
+    document.getElementById('guess-history').innerHTML = '';
+    document.getElementById('guess-input').value = '';
+    document.getElementById('guess-input').disabled = false;
+    document.getElementById('guess-btn').disabled = false;
+    document.getElementById('feedback-msg').className = 'feedback-msg';
+    document.getElementById('reveal-box').style.display = 'none';
+    document.getElementById('input-group').style.display = 'flex';
+
+    // Update progress pips
+    for (let i = 0; i < 3; i++) {
+      const pip = document.getElementById(`pip-${i}`);
+      pip.className = 'progress-pip';
+      if (i < currentRound) pip.classList.add('done');
+      else if (i === currentRound) pip.classList.add('active');
+    }
+
+    // Animate card
+    const card = document.getElementById('expense-card');
+    card.classList.remove('animate-in');
+    void card.offsetWidth;
+    card.classList.add('animate-in');
+  }
+
+  function submitGuess() {
+    const input = document.getElementById('guess-input');
+    const val = parseInt(input.value.replace(/,/g, ''));
+    if (isNaN(val) || val < 0) {
+      input.classList.add('shake');
+      setTimeout(() => input.classList.remove('shake'), 400);
+      return;
+    }
+
+    const e = expenses[currentRound];
+    attemptsLeft--;
+    currentGuesses.push(val);
+
+    // Lose a heart
+    const heartIdx = 3 - attemptsLeft - 1;
+    document.getElementById(`h${heartIdx}`).classList.add('lost');
+
+    // Add to guess history display
+    const hist = document.getElementById('guess-history');
+    const chip = document.createElement('div');
+    chip.className = 'guess-chip';
+
+    const diff = Math.abs(val - e.price);
+    const pct = diff / e.price;
+
+    if (val === e.price) {
+      chip.classList.add('arrow-correct');
+      chip.innerHTML = `<span class="arrow">✓</span> $${val.toLocaleString()} — Exact!`;
+      showReveal(true);
+      return;
+    } else if (val < e.price) {
+      chip.classList.add('arrow-up');
+      chip.innerHTML = `<span class="arrow">↑</span> $${val.toLocaleString()} — Go Higher`;
+      showFeedback('higher', val, pct);
+    } else {
+      chip.classList.add('arrow-down');
+      chip.innerHTML = `<span class="arrow">↓</span> $${val.toLocaleString()} — Go Lower`;
+      showFeedback('lower', val, pct);
+    }
+    hist.appendChild(chip);
+
+    input.value = '';
+    input.focus();
+
+    if (attemptsLeft === 0) {
+      showReveal(false);
+    }
+  }
+
+  function showFeedback(dir, val, pct) {
+    const fb = document.getElementById('feedback-msg');
+    const icon = document.getElementById('feedback-icon');
+    const text = document.getElementById('feedback-text');
+
+    fb.className = 'feedback-msg ' + dir;
+    const warm = pct < 0.15 ? '🔥 Getting warm! ' : pct < 0.40 ? '🤔 Getting closer. ' : '';
+    if (dir === 'higher') {
+      icon.textContent = '↑';
+      text.textContent = `${warm}The actual price is HIGHER than $${val.toLocaleString()}.`;
+    } else {
+      icon.textContent = '↓';
+      text.textContent = `${warm}The actual price is LOWER than $${val.toLocaleString()}.`;
+    }
+  }
+
+  function showReveal(won) {
+    const e = expenses[currentRound];
+    const input = document.getElementById('guess-input');
+    const btn = document.getElementById('guess-btn');
+
+    input.disabled = true;
+    btn.disabled = true;
+    document.getElementById('feedback-msg').className = 'feedback-msg';
+
+    document.getElementById('reveal-price').textContent = e.priceLabel;
+    document.getElementById('reveal-note').textContent = e.note;
+    const link = document.getElementById('reveal-source');
+    link.href = e.sourceUrl;
+    link.textContent = `Source: ${e.sourceLabel} →`;
+
+    const revealBox = document.getElementById('reveal-box');
+    revealBox.style.display = 'block';
+
+    const isLast = currentRound === 2;
+    document.getElementById('next-btn').textContent = isLast ? 'SEE RESULTS →' : 'NEXT ROUND →';
+
+    // Add final correct to history if won
+    if (won) {
+      const hist = document.getElementById('guess-history');
+      const chip = document.createElement('div');
+      chip.className = 'guess-chip arrow-correct';
+      chip.innerHTML = `<span class="arrow">✓</span> $${currentGuesses[currentGuesses.length-1].toLocaleString()} — Correct!`;
+      hist.appendChild(chip);
+    }
+
+    roundResults.push({
+      expense: e,
+      won,
+      guesses: [...currentGuesses],
+      attemptsUsed: 3 - attemptsLeft
+    });
+  }
+
+  function nextRound() {
+    currentRound++;
+    if (currentRound >= 3) {
+      showSummary();
+    } else {
+      loadRound();
+    }
+  }
+
+  function showSummary() {
+    document.getElementById('question-screen').style.display = 'none';
+    document.getElementById('summary-screen').style.display = 'block';
+
+    // Update all pips to done
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`pip-${i}`).className = 'progress-pip done';
+    }
+
+    const solved = roundResults.filter(r => r.won).length;
+    const totalGuesses = roundResults.reduce((a, r) => a + r.attemptsUsed, 0);
+
+    // Find closest guess across all rounds
+    let closestDiff = Infinity;
+    let closestVal = 0;
+    roundResults.forEach(r => {
+      r.guesses.forEach(g => {
+        const d = Math.abs(g - r.expense.price);
+        if (d < closestDiff) {
+          closestDiff = d;
+          closestVal = g;
+        }
+      });
+    });
+
+    document.getElementById('final-score').textContent = solved;
+    document.getElementById('stat-guesses').textContent = totalGuesses;
+    document.getElementById('stat-closest').textContent = `$${closestVal.toLocaleString()}`;
+    document.getElementById('stat-solved').textContent = `${solved}/3`;
+
+    // Round summaries
+    const container = document.getElementById('round-summaries');
+    container.innerHTML = '';
+    roundResults.forEach((r, i) => {
+      const div = document.createElement('div');
+      div.className = `round-summary ${r.won ? 'won' : 'lost'} animate-in`;
+      div.style.animationDelay = `${i * 0.1}s`;
+
+      const guessChips = r.guesses.map((g, gi) => {
+        const isLast = gi === r.guesses.length - 1;
+        const cls = (r.won && isLast) ? 'rs-tag final-correct' : 'rs-tag';
+        return `<span class="${cls}">$${g.toLocaleString()}</span>`;
+      }).join('');
+
+      div.innerHTML = `
+        <div class="rs-top">
+          <div class="rs-name">Round ${i+1}: ${r.expense.title}</div>
+          <div class="rs-price">${r.expense.priceLabel}</div>
+        </div>
+        <div class="rs-guesses">${guessChips}</div>
+        <div class="rs-outcome ${r.won ? 'won' : 'lost'}">
+          ${r.won ? `✓ SOLVED in ${r.attemptsUsed} guess${r.attemptsUsed > 1 ? 'es' : ''}` : '✗ NOT SOLVED — Price revealed'}
+        </div>
+      `;
+      container.appendChild(div);
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function resetGame() {
+    document.getElementById('summary-screen').style.display = 'none';
+    document.getElementById('intro-screen').style.display = 'block';
+    document.getElementById('question-screen').style.display = 'none';
+    for (let i = 0; i < 3; i++) {
+      document.getElementById(`pip-${i}`).className = 'progress-pip';
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Allow comma-formatted numbers in input
+  document.addEventListener('DOMContentLoaded', () => {
+    const inp = document.getElementById('guess-input');
+    if (inp) {
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitGuess();
+      });
+    }
+  });
+</script>
+</body>
+</html>
