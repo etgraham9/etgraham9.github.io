@@ -22,8 +22,6 @@
     overflow-x: hidden;
   }
 
-  /* Scanline removed for light theme */
-
   .container {
     max-width: 820px;
     margin: 0 auto;
